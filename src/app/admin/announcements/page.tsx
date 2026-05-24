@@ -16,7 +16,15 @@ export default function AdminAnnouncementsPage() {
   const fetchData = async () => {
     const s = createClient()
     const { data } = await s.from('announcements').select('*').order('created_at', { ascending: false })
-    if (data) setAnnouncements(data)
+    if (data) {
+      setAnnouncements(data)
+      const params = new URLSearchParams(window.location.search)
+      if (params.get('add') === 'true') {
+        setForm({ message: '', is_active: true })
+        setEditId(null)
+        setShowModal(true)
+      }
+    }
   }
   useEffect(() => { fetchData() }, [])
 

@@ -16,7 +16,15 @@ export default function AdminCoursesPage() {
   const fetch = async () => {
     const s = createClient()
     const { data } = await s.from('courses').select('*').order('sort_order')
-    if (data) setCourses(data)
+    if (data) {
+      setCourses(data)
+      const params = new URLSearchParams(window.location.search)
+      if (params.get('add') === 'true') {
+        setForm({ course_name: '', duration: '', fees: '', description: '', benefits: '', image: '', is_active: true, sort_order: data.length })
+        setEditId(null)
+        setShowModal(true)
+      }
+    }
   }
   useEffect(() => { fetch() }, [])
 

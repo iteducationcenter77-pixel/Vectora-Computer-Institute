@@ -89,7 +89,7 @@ export default function HeroSection() {
           >
             {slide.image_link ? (
               <div
-                className="absolute inset-0 bg-cover bg-center"
+                className="absolute inset-0 bg-cover bg-center opacity-20 transition-opacity duration-1000"
                 style={{ backgroundImage: `url(${slide.image_link})` }}
               />
             ) : (
