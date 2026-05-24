@@ -6,10 +6,18 @@ export async function updateSession(request: NextRequest) {
     request,
   })
 
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  let url = process.env.NEXT_PUBLIC_SUPABASE_URL
+  if (url && url.endsWith('/rest/v1/')) {
+    url = url.slice(0, -9)
+  }
   const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
   if (!url || !anonKey || url.includes('your-project') || anonKey.includes('your-anon-key')) {
+    if (request.nextUrl.pathname.startsWith('/admin') && !request.nextUrl.pathname.startsWith('/admin/login')) {
+      const redirectUrl = request.nextUrl.clone()
+      redirectUrl.pathname = '/admin/login'
+      return NextResponse.redirect(redirectUrl)
+    }
     return supabaseResponse
   }
 
