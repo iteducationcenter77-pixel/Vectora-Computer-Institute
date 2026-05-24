@@ -44,9 +44,9 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   if (isLoginPage) return <>{children}</>
 
   return (
-    <div className="flex min-h-screen" style={{ background: 'var(--bg-primary)' }}>
+    <div className="flex min-h-screen admin-panel-wrapper" style={{ background: 'var(--bg-primary)' }}>
       {/* Mobile Toggle */}
-      <button onClick={() => setSidebarOpen(!sidebarOpen)} className="fixed top-4 left-4 z-50 md:hidden p-2 rounded-lg text-white"
+      <button onClick={() => setSidebarOpen(!sidebarOpen)} className="fixed top-4 left-4 z-50 md:hidden p-2 rounded-lg text-[var(--text-primary)]"
         style={{ background: 'var(--bg-tertiary)' }}>
         {sidebarOpen ? <HiX size={20} /> : <HiMenu size={20} />}
       </button>
@@ -57,10 +57,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         <div className="p-6">
           <div className="flex items-center gap-3 mb-8">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center font-bold text-white"
-              style={{ fontFamily: 'var(--font-heading)' }}>V</div>
+               style={{ fontFamily: 'var(--font-heading)' }}>V</div>
             <div>
-              <p className="text-sm font-bold text-white" style={{ fontFamily: 'var(--font-heading)' }}>Vectora Admin</p>
-              <p className="text-[0.65rem] text-gray-500 truncate max-w-[140px]">{userEmail}</p>
+              <p className="text-sm font-bold text-[var(--text-primary)]" style={{ fontFamily: 'var(--font-heading)' }}>Vectora Admin</p>
+              <p className="text-[0.65rem] text-[var(--text-muted)] truncate max-w-[140px]">{userEmail}</p>
             </div>
           </div>
 

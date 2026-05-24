@@ -518,3 +518,86 @@ select.input-glass {
   animation: shimmer 1.5s ease-in-out infinite;
   border-radius: 0.5rem;
 }
+
+/* ========================================
+   ADMIN PANEL CUSTOM LIGHT THEME OVERRIDES
+   ======================================== */
+.admin-panel-wrapper {
+  color: var(--text-primary);
+}
+
+.admin-panel-wrapper .text-white {
+  color: var(--text-primary) !important;
+}
+
+.admin-panel-wrapper .text-gray-300 {
+  color: var(--text-secondary) !important;
+}
+
+.admin-panel-wrapper .text-gray-400 {
+  color: var(--text-secondary) !important;
+}
+
+.admin-panel-wrapper .text-gray-500 {
+  color: var(--text-muted) !important;
+}
+
+.admin-panel-wrapper .text-red-400 {
+  color: #dc2626 !important;
+}
+
+.admin-panel-wrapper .text-green-400 {
+  color: #16a34a !important;
+}
+
+.admin-panel-wrapper .text-blue-400 {
+  color: #2563eb !important;
+}
+
+.admin-panel-wrapper .text-purple-400 {
+  color: #7c3aed !important;
+}
+
+.admin-panel-wrapper .text-purple-300 {
+  color: #6d28d9 !important;
+}
+
+.admin-panel-wrapper .text-yellow-400 {
+  color: #d97706 !important;
+}
+
+.admin-panel-wrapper .text-pink-400 {
+  color: #db2777 !important;
+}
+
+.admin-panel-wrapper .hover\:text-red-300:hover {
+  color: #b91c1c !important;
+}
+
+.admin-panel-wrapper .bg-purple-500\/10 {
+  background: rgba(109, 40, 217, 0.08) !important;
+}
+
+.admin-panel-wrapper .bg-purple-500\/20 {
+  background: var(--purple-600) !important;
+  color: #ffffff !important;
+}
+
+.admin-panel-wrapper .text-purple-300.bg-purple-500\/20 {
+  color: #ffffff !important;
+}
+
+.admin-panel-wrapper .bg-gray-800 {
+  background: rgba(22, 61, 42, 0.04) !important;
+  color: var(--text-secondary) !important;
+  border: 1px solid var(--border-color);
+}
+
+.admin-panel-wrapper .hover\:bg-purple-500\/10:hover {
+  background: rgba(109, 40, 217, 0.08) !important;
+}
+
+.admin-panel-wrapper .hover\:bg-red-500\/10:hover {
+  background: rgba(239, 68, 68, 0.08) !important;
+}
+
