@@ -31,28 +31,28 @@ export default function AdminLogin() {
         <div className="text-center mb-8">
           <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center font-bold text-white text-2xl mx-auto mb-4"
             style={{ fontFamily: 'var(--font-heading)' }}>V</div>
-          <h1 className="text-2xl font-bold text-white" style={{ fontFamily: 'var(--font-heading)' }}>Admin Panel</h1>
-          <p className="text-sm text-gray-400 mt-1">Sign in to manage your institute</p>
+          <h1 className="text-2xl font-bold text-[var(--text-primary)]" style={{ fontFamily: 'var(--font-heading)' }}>Admin Panel</h1>
+          <p className="text-sm text-[var(--text-secondary)] mt-1">Sign in to manage your institute</p>
         </div>
 
         <form onSubmit={handleLogin} className="glass-card p-8 space-y-5">
           {error && (
-            <div className="p-3 rounded-lg text-sm text-red-400" style={{ background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)' }}>
+            <div className="p-3 rounded-lg text-sm text-red-500 bg-red-500/10 border border-red-500/20">
               {error}
             </div>
           )}
           <div>
-            <label className="block text-sm text-gray-400 mb-2">Email</label>
+            <label className="block text-sm text-[var(--text-secondary)] mb-2 font-medium">Email</label>
             <div className="relative">
-              <HiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
-              <input type="email" required value={email} onChange={e => setEmail(e.target.value)} className="input-glass !pl-10" placeholder="admin@vectora.com" />
+              <HiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" />
+              <input type="email" required value={email} onChange={e => setEmail(e.target.value)} className="input-glass !pl-10 text-[var(--text-primary)] placeholder-[var(--text-muted)]" placeholder="admin@vectora.com" />
             </div>
           </div>
           <div>
-            <label className="block text-sm text-gray-400 mb-2">Password</label>
+            <label className="block text-sm text-[var(--text-secondary)] mb-2 font-medium">Password</label>
             <div className="relative">
-              <HiLockClosed className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
-              <input type="password" required value={password} onChange={e => setPassword(e.target.value)} className="input-glass !pl-10" placeholder="••••••••" />
+              <HiLockClosed className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" />
+              <input type="password" required value={password} onChange={e => setPassword(e.target.value)} className="input-glass !pl-10 text-[var(--text-primary)] placeholder-[var(--text-muted)]" placeholder="••••••••" />
             </div>
           </div>
           <button type="submit" disabled={loading} className="btn-primary w-full !justify-center">
