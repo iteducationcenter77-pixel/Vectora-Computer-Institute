@@ -23,19 +23,7 @@ export default function CertificatesPage() {
   const fetchCerts = async () => {
     const s = createClient()
     const { data } = await s.from('certificates').select('*').order('created_at', { ascending: false })
-    if (data) {
-      setCerts(data)
-      const params = new URLSearchParams(window.location.search)
-      if (params.get('add') === 'true') {
-        const abbr = courseAbbr['AI & Data Science'] || 'GEN'
-        const year = new Date().getFullYear()
-        const seq = String(data.length + 1).padStart(3, '0')
-        const code = `VTCI-${abbr}-${year}-${seq}`
-        setForm({ student_name: '', course: 'AI & Data Science', certificate_code: code, issue_date: new Date().toISOString().split('T')[0], pdf_link: '', status: 'Verified' })
-        setEditId(null)
-        setShowModal(true)
-      }
-    }
+    if (data) setCerts(data)
   }
 
   useEffect(() => { fetchCerts() }, [])

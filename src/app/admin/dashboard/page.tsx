@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { createClient } from '@/lib/supabase/client'
 import { HiShieldCheck, HiAcademicCap, HiPhotograph, HiUserGroup, HiEye } from 'react-icons/hi'
-import Link from 'next/link'
 
 export default function AdminDashboard() {
   const [stats, setStats] = useState({ certificates: 0, courses: 0, gallery: 0, admissions: 0, visitors: 0 })
@@ -52,25 +51,6 @@ export default function AdminDashboard() {
             <p className="text-xs text-gray-500 mt-1">{c.label}</p>
           </motion.div>
         ))}
-      </div>
-
-      <h2 className="text-lg font-bold text-white mb-4" style={{ fontFamily: 'var(--font-heading)' }}>Quick Actions</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 mb-8">
-        <Link href="/admin/certificates?add=true" className="btn-primary !justify-center !py-3">
-          📜 Add Certificate
-        </Link>
-        <Link href="/admin/courses?add=true" className="btn-primary !justify-center !py-3">
-          🎓 Add Course
-        </Link>
-        <Link href="/admin/gallery?add=true" className="btn-primary !justify-center !py-3">
-          🖼 Add Image
-        </Link>
-        <Link href="/admin/hero?add=true" className="btn-primary !justify-center !py-3">
-          🎥 Add Hero Slide
-        </Link>
-        <Link href="/admin/announcements?add=true" className="btn-primary !justify-center !py-3">
-          📢 Add Announcement
-        </Link>
       </div>
 
       <div className="admin-card">

@@ -18,14 +18,7 @@ export default function AdminGalleryPage() {
   const fetchImages = async () => {
     const s = createClient()
     const { data } = await s.from('gallery').select('*').order('sort_order')
-    if (data) {
-      setImages(data)
-      const params = new URLSearchParams(window.location.search)
-      if (params.get('add') === 'true') {
-        setForm({ image_link: '', category: 'Classes', title: '' })
-        setShowModal(true)
-      }
-    }
+    if (data) setImages(data)
   }
   useEffect(() => { fetchImages() }, [])
 

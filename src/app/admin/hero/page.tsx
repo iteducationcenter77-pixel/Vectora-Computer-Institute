@@ -16,15 +16,7 @@ export default function AdminHeroPage() {
   const fetchSlides = async () => {
     const s = createClient()
     const { data } = await s.from('hero_slides').select('*').order('sort_order')
-    if (data) {
-      setSlides(data)
-      const params = new URLSearchParams(window.location.search)
-      if (params.get('add') === 'true') {
-        setForm({ image_link: '', heading: '', subheading: '', button_text: 'Start Learning', button_link: 'https://wa.me/918638373298', is_active: true, sort_order: data.length })
-        setEditId(null)
-        setShowModal(true)
-      }
-    }
+    if (data) setSlides(data)
   }
   useEffect(() => { fetchSlides() }, [])
 
