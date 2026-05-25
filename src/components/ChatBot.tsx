@@ -93,7 +93,7 @@ export default function ChatBot() {
       {/* ── Toggle Button (3D Effect) ── */}
       <motion.button
         onClick={() => setOpen(!open)}
-        className="fixed bottom-24 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center text-white"
+        className="fixed bottom-6 left-4 sm:left-6 z-50 w-14 h-14 rounded-full flex items-center justify-center text-white"
         style={{
           background: 'var(--gradient-purple)',
           boxShadow: '0 8px 20px -2px rgba(99, 102, 241, 0.4), 0 4px 6px -1px rgba(0, 0, 0, 0.15), inset 0 2px 0 rgba(255, 255, 255, 0.25), inset 0 -2px 0 rgba(0, 0, 0, 0.15)',
@@ -119,13 +119,13 @@ export default function ChatBot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.92 }}
             transition={{ type: 'spring', stiffness: 380, damping: 28 }}
-            className="fixed bottom-40 right-6 z-50 w-[340px] max-w-[calc(100vw-2rem)] rounded-2xl overflow-hidden flex flex-col"
+            className="fixed bottom-24 left-4 sm:left-6 z-50 w-[340px] max-w-[calc(100vw-2rem)] rounded-2xl overflow-hidden flex flex-col"
             style={{
               background: 'var(--bg-card)',
               border: '1px solid var(--border-color)',
               // Premium 3D depth shadow layering
               boxShadow: '0 30px 60px -15px rgba(0, 0, 0, 0.25), 0 15px 30px -10px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(22, 61, 42, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.4)',
-              height: 520,
+              height: 'min(520px, calc(100vh - 120px))',
             }}
           >
             {/* ── Header ── */}
