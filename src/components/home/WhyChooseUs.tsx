@@ -50,12 +50,14 @@ export default function WhyChooseUs() {
           {features.map((f, i) => (
             <motion.div key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}>
-              <div className="glass-card p-5 flex flex-col items-start text-left h-full min-h-[168px] group">
-                <div className="icon-plate text-lg mb-3.5 group-hover:scale-105 transition-transform duration-300">
+              <div className="glass-card feature-card group">
+                <div className="icon-plate text-lg group-hover:scale-105 transition-transform duration-300">
                   {f.icon}
                 </div>
-                <h3 className="card-title !text-[0.95rem] mb-1.5">{f.title}</h3>
-                <p className="card-text !text-[0.825rem]">{f.desc}</p>
+                <div className="feature-card__copy">
+                  <h3 className="card-title !text-[0.95rem] mb-1.5">{f.title}</h3>
+                  <p className="card-text !text-[0.825rem]">{f.desc}</p>
+                </div>
               </div>
             </motion.div>
           ))}
@@ -70,7 +72,7 @@ export default function WhyChooseUs() {
             { end: 50, suffix: '+', label: 'Workshops Done' },
             { end: 98, suffix: '%', label: 'Satisfaction Rate' },
           ].map((s, i) => (
-            <div key={i} className="glass-card p-4 text-center">
+            <div key={i} className="glass-card stat-card text-center">
               <p className="text-xl md:text-2xl font-bold text-[var(--text-primary)] mb-1" style={{ fontFamily: 'var(--font-heading)' }}>
                 <Counter end={s.end} suffix={s.suffix} />
               </p>

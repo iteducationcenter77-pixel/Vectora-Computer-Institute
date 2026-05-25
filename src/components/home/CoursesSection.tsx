@@ -64,21 +64,23 @@ export default function CoursesSection() {
           {list.map((c, i) => (
             <motion.div key={c.id} initial={false} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               transition={{ delay: i * 0.08, duration: 0.5 }}>
-              <div className="glass-card p-5 sm:p-6 h-full min-h-[260px] flex flex-col justify-between gap-5 group cursor-pointer">
-                <div className="min-w-0">
-                  <div className="icon-plate mb-4 group-hover:scale-105 transition-transform">
+              <div className="glass-card course-card group cursor-pointer">
+                <div className="course-card__top">
+                  <div className="icon-plate group-hover:scale-105 transition-transform">
                     {getCourseIcon(c.course_name)}
                   </div>
-                  <h3 className="card-title mb-2 transition-colors">{c.course_name}</h3>
-                  <p className="card-text line-clamp-3">{c.description}</p>
-                </div>
-                <div>
-                  <div className="meta-row mb-4">
-                    <span className="meta-pill"><HiClock className="text-emerald-700" size={14} /> {c.duration}</span>
-                    <span className="meta-pill !text-[var(--gold-300)]"><HiCurrencyRupee className="text-emerald-700" size={14} /> {c.fees}</span>
+                  <div className="course-card__body">
+                    <h3 className="course-card__title transition-colors">{c.course_name}</h3>
+                    <div className="meta-row">
+                      <span className="meta-pill"><HiClock className="text-emerald-700" size={14} /> {c.duration}</span>
+                      <span className="meta-pill !text-[var(--gold-300)]"><HiCurrencyRupee className="text-emerald-700" size={14} /> {c.fees}</span>
+                    </div>
                   </div>
+                </div>
+                <p className="course-card__description line-clamp-3">{c.description}</p>
+                <div className="course-card__actions">
                   <a href="https://wa.me/918638373298" target="_blank" rel="noopener noreferrer"
-                    className="flex items-center gap-1.5 text-xs text-[var(--text-primary)] font-semibold transition-colors hover:text-[var(--purple-500)] mt-auto pt-2">
+                    className="flex items-center gap-1.5 text-xs text-[var(--text-primary)] font-semibold transition-colors hover:text-[var(--purple-500)]">
                     Enroll Now <HiArrowRight className="group-hover:translate-x-1 transition-transform" />
                   </a>
                 </div>

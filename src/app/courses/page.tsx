@@ -67,20 +67,20 @@ export default function CoursesPage() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {list.map((c, i) => (
             <motion.div key={c.id} initial={false} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}>
-              <div className="glass-card p-5 sm:p-6 h-full min-h-[280px] flex flex-col">
-                <div className="flex items-start gap-4 mb-4 min-w-0">
-                  <div className="icon-plate shrink-0">
+              <div className="glass-card course-card">
+                <div className="course-card__top">
+                  <div className="icon-plate">
                     {getCourseIcon(c.course_name)}
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <h2 className="card-title mb-2">{c.course_name}</h2>
+                  <div className="course-card__body">
+                    <h2 className="course-card__title">{c.course_name}</h2>
                     <div className="meta-row">
                       <span className="meta-pill"><HiClock className="text-emerald-700" size={14} /> {c.duration}</span>
                       <span className="meta-pill !text-[var(--gold-300)]"><HiCurrencyRupee className="text-emerald-700" size={14} /> {c.fees}</span>
                     </div>
                   </div>
                 </div>
-                <p className="card-text mb-5">{c.description}</p>
+                <p className="course-card__description">{c.description}</p>
 
                 <AnimatePresence>
                   {expanded === c.id && c.benefits?.length > 0 && (
@@ -98,7 +98,7 @@ export default function CoursesPage() {
                   )}
                 </AnimatePresence>
 
-                <div className="flex flex-wrap items-center justify-between gap-3 mt-auto pt-2">
+                <div className="course-card__actions">
                   <button onClick={() => setExpanded(expanded === c.id ? null : c.id)}
                     className="text-xs text-[var(--text-primary)] font-semibold transition-colors">
                     {expanded === c.id ? 'Show Less' : 'View Details'}
