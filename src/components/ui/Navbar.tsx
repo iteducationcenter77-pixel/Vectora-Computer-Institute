@@ -44,11 +44,9 @@ export default function Navbar() {
     >
       <div className="container-main flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 group min-w-0" aria-label="Vectora Computer Institute home">
-          <div className="relative shrink-0">
-            <div className="w-11 h-11 rounded-lg bg-white border border-[var(--border-color)] flex items-center justify-center p-1.5 shadow-sm">
-              <Image src="/vec-logo.png" alt="Vectora logo" width={36} height={36} className="h-full w-full object-contain" priority />
-            </div>
+        <Link href="/" className="flex items-center gap-2 group min-w-0" aria-label="Vectora Computer Institute home">
+          <div className="relative shrink-0 flex items-center">
+            <Image src="/vec-logo.png" alt="Vectora logo" width={40} height={40} className="w-10 h-10 object-contain" priority />
           </div>
           <div className="min-w-0">
             <span className="block text-xl font-bold tracking-tight leading-tight" style={{ fontFamily: 'var(--font-heading)' }}>

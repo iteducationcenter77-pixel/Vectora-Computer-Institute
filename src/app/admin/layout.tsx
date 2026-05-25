@@ -62,10 +62,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         style={{ background: 'var(--bg-secondary)', borderRight: '1px solid var(--border-color)' }}
       >
         {/* Sidebar Header — pinned */}
-        <div className="shrink-0 flex items-center gap-3 px-5 py-5" style={{ borderBottom: '1px solid var(--border-color)' }}>
-          <div className="w-10 h-10 rounded-lg bg-white border border-[var(--border-color)] flex items-center justify-center p-1.5 shadow-sm shrink-0">
-            <Image src="/vec-logo.png" alt="Vectora logo" width={36} height={36} className="h-full w-full object-contain" />
-          </div>
+        <div className="shrink-0 flex items-center gap-2.5 px-5 py-5" style={{ borderBottom: '1px solid var(--border-color)' }}>
+          <Image src="/vec-logo.png" alt="Vectora logo" width={36} height={36} className="w-9 h-9 object-contain" />
           <div className="min-w-0">
             <p className="text-sm font-bold text-[var(--text-primary)] leading-tight" style={{ fontFamily: 'var(--font-heading)' }}>Vectora Admin</p>
             <p className="text-[0.65rem] text-[var(--text-muted)] truncate max-w-[140px]">{userEmail}</p>

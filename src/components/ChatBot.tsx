@@ -25,9 +25,9 @@ const faqs = [
   {
     category: '🏛️ Affiliation & Recognition',
     items: [
-      { q: 'Are you affiliated with Skill India?', a: 'Yes! Vectora Computer Institute is affiliated with SCBCE Skill India, an initiative under the Government of India\'s Skill India Mission for skill development.' },
-      { q: 'What is the affiliation?', a: 'We are affiliated with SCBCE (Skill Council for Business Correspondence & Environment) under Skill India. Our certificates are nationally recognized.' },
-      { q: 'Are your certificates recognized?', a: 'Yes! Our certificates are recognized by SCBCE Skill India and can be verified online using your unique certificate code at vectora\'s verification page.' },
+      { q: 'Are you affiliated with Skill India?', a: 'Yes! Vectora Computer Institute is affiliated under CBCE Skill India. CBCE stands for Central Board of Computer Education, aligned with nationwide skill development initiatives.' },
+      { q: 'What does CBCE stand for?', a: 'CBCE stands for Central Board of Computer Education. We are an affiliated training center under CBCE Skill India.' },
+      { q: 'Are your certificates recognized?', a: 'Yes! Our certificates are issued and recognized under CBCE Skill India (Central Board of Computer Education) and can be verified online on our website.' },
     ],
   },
   {
@@ -79,7 +79,6 @@ export default function ChatBot() {
       { id: ++msgId, from: 'bot', text: a },
     ])
     setActiveCategory(null)
-    // Keep FAQ panel visible so users can ask more questions
   }
 
   const clearChat = () => {
@@ -91,13 +90,17 @@ export default function ChatBot() {
 
   return (
     <>
-      {/* ── Toggle Button ── */}
+      {/* ── Toggle Button (3D Effect) ── */}
       <motion.button
         onClick={() => setOpen(!open)}
-        className="fixed bottom-24 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center text-white shadow-2xl"
-        style={{ background: 'var(--gradient-purple)' }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
+        className="fixed bottom-24 right-6 z-50 w-14 h-14 rounded-full flex items-center justify-center text-white"
+        style={{
+          background: 'var(--gradient-purple)',
+          boxShadow: '0 8px 20px -2px rgba(99, 102, 241, 0.4), 0 4px 6px -1px rgba(0, 0, 0, 0.15), inset 0 2px 0 rgba(255, 255, 255, 0.25), inset 0 -2px 0 rgba(0, 0, 0, 0.15)',
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+        }}
+        whileHover={{ scale: 1.08, y: -2 }}
+        whileTap={{ scale: 0.94 }}
         aria-label="Open Vectora chat assistant"
       >
         <AnimatePresence mode="wait">
@@ -108,19 +111,20 @@ export default function ChatBot() {
         </AnimatePresence>
       </motion.button>
 
-      {/* ── Chat Window ── */}
+      {/* ── Chat Window (3D Shadow and Layout Fixes) ── */}
       <AnimatePresence>
         {open && (
           <motion.div
             initial={{ opacity: 0, y: 24, scale: 0.92 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 24, scale: 0.92 }}
-            transition={{ type: 'spring', stiffness: 380, damping: 30 }}
+            transition={{ type: 'spring', stiffness: 380, damping: 28 }}
             className="fixed bottom-40 right-6 z-50 w-[340px] max-w-[calc(100vw-2rem)] rounded-2xl overflow-hidden flex flex-col"
             style={{
               background: 'var(--bg-card)',
               border: '1px solid var(--border-color)',
-              boxShadow: '0 20px 60px rgba(22,61,42,0.12)',
+              // Premium 3D depth shadow layering
+              boxShadow: '0 30px 60px -15px rgba(0, 0, 0, 0.25), 0 15px 30px -10px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(22, 61, 42, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.4)',
               height: 520,
             }}
           >
@@ -143,8 +147,8 @@ export default function ChatBot() {
               </button>
             </div>
 
-            {/* ── Messages ── */}
-            <div className="flex-1 overflow-y-auto px-3 py-3 space-y-2.5" style={{ background: 'var(--bg-secondary)' }}>
+            {/* ── Messages Container with generous padding to prevent text from touching borders ── */}
+            <div className="flex-1 overflow-y-auto px-4 py-4 space-y-3" style={{ background: 'var(--bg-secondary)' }}>
               {messages.map((m) => (
                 <motion.div
                   key={m.id}
@@ -157,7 +161,7 @@ export default function ChatBot() {
                       style={{ background: 'var(--gradient-purple)' }}>V</div>
                   )}
                   <div
-                    className="max-w-[78%] px-3 py-2 rounded-2xl text-sm leading-relaxed"
+                    className="max-w-[80%] px-3.5 py-2.5 rounded-2xl text-sm leading-relaxed"
                     style={m.from === 'user'
                       ? { background: 'var(--purple-600)', color: '#fff', borderBottomRightRadius: 4 }
                       : { background: 'var(--bg-card)', color: 'var(--text-primary)', border: '1px solid var(--border-color)', borderBottomLeftRadius: 4 }
@@ -171,11 +175,11 @@ export default function ChatBot() {
             </div>
 
             {/* ── FAQ Panel ── */}
-            <div className="shrink-0" style={{ borderTop: '1px solid var(--border-color)', background: 'var(--bg-card)', maxHeight: 200, overflowY: 'auto' }}>
+            <div className="shrink-0 animate-none" style={{ borderTop: '1px solid var(--border-color)', background: 'var(--bg-card)', maxHeight: 200, overflowY: 'auto' }}>
               {/* FAQ toggle */}
               <button
                 onClick={() => setShowFAQs(v => !v)}
-                className="w-full flex items-center justify-between px-3 py-2 text-xs font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition"
+                className="w-full flex items-center justify-between px-4 py-2 text-xs font-semibold text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition"
               >
                 <span>💬 Ask a question</span>
                 <HiChevronDown className={`transition-transform ${showFAQs ? 'rotate-180' : ''}`} size={14} />
@@ -191,12 +195,12 @@ export default function ChatBot() {
                   >
                     {/* Category picker */}
                     {!activeCategory ? (
-                      <div className="px-2 pb-2 space-y-1">
+                      <div className="px-3 pb-3 space-y-1.5">
                         {faqs.map(cat => (
                           <button
                             key={cat.category}
                             onClick={() => setActiveCategory(cat.category)}
-                            className="w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-medium flex items-center justify-between transition hover:opacity-80"
+                            className="w-full text-left px-3 py-2 rounded-lg text-xs font-medium flex items-center justify-between transition hover:opacity-85"
                             style={{ background: 'rgba(22,61,42,0.04)', color: 'var(--text-primary)', border: '1px solid var(--border-color)' }}
                           >
                             {cat.category}
@@ -206,19 +210,19 @@ export default function ChatBot() {
                       </div>
                     ) : (
                       /* Questions in category */
-                      <div className="px-2 pb-2">
+                      <div className="px-3 pb-3">
                         <button
                           onClick={() => setActiveCategory(null)}
-                          className="flex items-center gap-1 text-[10px] text-[var(--text-muted)] hover:text-[var(--text-primary)] mb-1.5 transition"
+                          className="flex items-center gap-1 text-[10px] text-[var(--text-muted)] hover:text-[var(--text-primary)] mb-2 transition"
                         >
                           ← Back to categories
                         </button>
-                        <div className="space-y-1">
+                        <div className="space-y-1.5">
                           {currentCategory?.items.map((item, i) => (
                             <button
                               key={i}
                               onClick={() => handleQuestion(item.q, item.a)}
-                              className="w-full text-left px-2.5 py-1.5 rounded-lg text-xs font-medium transition hover:opacity-80"
+                              className="w-full text-left px-3 py-2 rounded-lg text-xs font-medium transition hover:opacity-85"
                               style={{ background: 'rgba(22,61,42,0.04)', color: 'var(--purple-600)', border: '1px solid var(--border-color)' }}
                             >
                               {item.q}
@@ -233,12 +237,12 @@ export default function ChatBot() {
             </div>
 
             {/* ── WhatsApp footer ── */}
-            <div className="shrink-0 px-3 py-2.5" style={{ borderTop: '1px solid var(--border-color)', background: 'var(--bg-card)' }}>
+            <div className="shrink-0 px-4 py-3" style={{ borderTop: '1px solid var(--border-color)', background: 'var(--bg-card)' }}>
               <a
                 href="https://wa.me/918638373298"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center justify-center gap-2 w-full py-2 rounded-xl text-xs font-semibold text-white transition hover:opacity-90"
+                className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl text-xs font-semibold text-white transition hover:opacity-95"
                 style={{ background: 'linear-gradient(135deg, #25D366, #128C7E)' }}
               >
                 <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
