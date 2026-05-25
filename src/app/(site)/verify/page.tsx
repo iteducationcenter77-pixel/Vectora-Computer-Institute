@@ -108,7 +108,7 @@ export default function VerifyPage() {
 
         {!searched && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }} className="text-center mt-8">
-            <p className="text-[var(--text-muted)] text-sm">Example codes: <span className="text-[var(--text-primary)] font-semibold font-semibold">VTCI-AI-2026-001</span>, <span className="text-[var(--text-primary)] font-semibold font-semibold">VTCI-WD-2026-002</span></p>
+            <p className="text-[var(--text-muted)] text-sm">Example codes: <span className="text-[var(--text-primary)] font-semibold">VTCI-AI-2026-001</span>, <span className="text-[var(--text-primary)] font-semibold">VTCI-WD-2026-002</span></p>
           </motion.div>
         )}
       </div>

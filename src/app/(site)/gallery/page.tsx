@@ -51,7 +51,6 @@ export default function GalleryPage() {
           <div className="section-divider mt-6" style={{ background: 'var(--gradient-purple)' }} />
         </motion.div>
 
-        {/* Filter Tabs */}
         <div className="flex flex-wrap justify-center gap-3 mb-12">
           {categories.map(cat => (
             <button key={cat} onClick={() => setFilter(cat)}
@@ -66,7 +65,6 @@ export default function GalleryPage() {
           ))}
         </div>
 
-        {/* Masonry Grid */}
         <div className="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
           <AnimatePresence>
             {filtered.map((img, i) => (
@@ -94,7 +92,6 @@ export default function GalleryPage() {
           </AnimatePresence>
         </div>
 
-        {/* Lightbox */}
         <AnimatePresence>
           {lightbox && (
             <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}

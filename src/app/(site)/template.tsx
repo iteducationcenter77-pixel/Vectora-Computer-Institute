@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 
-export default function Template({ children }: { children: React.ReactNode }) {
+export default function SiteTemplate({ children }: { children: React.ReactNode }) {
   return (
     <motion.div
       initial={false}
