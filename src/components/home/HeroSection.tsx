@@ -80,7 +80,7 @@ export default function HeroSection() {
                 alt=""
                 aria-hidden="true"
                 className="absolute inset-0 w-full h-full object-cover"
-                style={{ opacity: 0.65 }}
+                style={{ opacity: 0.40 }}
                 onError={() => setImgError(prev => new Set(prev).add(currentImage.id))}
               />
               {/* Overlay so text is readable over the photo */}
