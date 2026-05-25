@@ -5,16 +5,16 @@ import { useRouter, usePathname } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import { createClient } from '@/lib/supabase/client'
-import { HiHome, HiAcademicCap, HiPhotograph, HiShieldCheck, HiSpeakerphone, HiUserGroup, HiViewGrid, HiLogout, HiMenu, HiX } from 'react-icons/hi'
+import { HiHome, HiAcademicCap, HiPhotograph, HiShieldCheck, HiSpeakerphone, HiUserGroup, HiViewGrid, HiLogout, HiMenu, HiX, HiCollection } from 'react-icons/hi'
 
 const navItems = [
-  { name: 'Dashboard', href: '/admin/dashboard', icon: <HiViewGrid /> },
+  { name: 'Dashboard',     href: '/admin/dashboard',    icon: <HiViewGrid /> },
   { name: 'Certificates', href: '/admin/certificates', icon: <HiShieldCheck /> },
-  { name: 'Courses', href: '/admin/courses', icon: <HiAcademicCap /> },
-  { name: 'Gallery', href: '/admin/gallery', icon: <HiPhotograph /> },
-  { name: 'Hero Slides', href: '/admin/hero', icon: <HiHome /> },
+  { name: 'Courses',      href: '/admin/courses',      icon: <HiAcademicCap /> },
+  { name: 'Gallery',      href: '/admin/gallery',      icon: <HiPhotograph /> },
+  { name: 'Hero Images',  href: '/admin/hero-images',  icon: <HiCollection /> },
   { name: 'Announcements', href: '/admin/announcements', icon: <HiSpeakerphone /> },
-  { name: 'Admissions', href: '/admin/admissions', icon: <HiUserGroup /> },
+  { name: 'Admissions',   href: '/admin/admissions',   icon: <HiUserGroup /> },
 ]
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {

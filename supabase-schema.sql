@@ -65,7 +65,23 @@ CREATE POLICY "Public can read gallery" ON gallery FOR SELECT USING (true);
 CREATE POLICY "Authenticated users can manage gallery" ON gallery FOR ALL TO authenticated USING (true) WITH CHECK (true);
 
 -- =============================================
--- HERO SLIDES TABLE
+-- HERO IMAGES TABLE (background photos, rotate every 30s)
+-- Add Google Drive image URLs here via admin panel
+-- =============================================
+CREATE TABLE IF NOT EXISTS hero_images (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  image_url TEXT NOT NULL,
+  sort_order INT DEFAULT 0,
+  is_active BOOLEAN DEFAULT true,
+  created_at TIMESTAMPTZ DEFAULT now()
+);
+
+ALTER TABLE hero_images ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Public can read active hero images" ON hero_images FOR SELECT USING (true);
+CREATE POLICY "Authenticated users can manage hero images" ON hero_images FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+-- =============================================
+-- HERO SLIDES TABLE (legacy — kept for reference)
 -- =============================================
 CREATE TABLE IF NOT EXISTS hero_slides (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
@@ -82,6 +98,7 @@ CREATE TABLE IF NOT EXISTS hero_slides (
 ALTER TABLE hero_slides ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Public can read active hero slides" ON hero_slides FOR SELECT USING (true);
 CREATE POLICY "Authenticated users can manage hero slides" ON hero_slides FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
 
 -- =============================================
 -- ANNOUNCEMENTS TABLE

@@ -7,68 +7,12 @@ import { HiArrowRight, HiShieldCheck } from 'react-icons/hi'
 import { createClient } from '@/lib/supabase/client'
 import Link from 'next/link'
 
-interface HeroSlide {
+interface HeroImage {
   id: string
-  heading: string
-  subheading: string
-  image_link: string
-  button_text: string
-  button_link: string
+  image_url: string
+  is_active: boolean
+  sort_order: number
 }
-
-/**
- * Converts any Google Drive URL format into a direct image URL.
- * Supports:
- *   https://drive.google.com/file/d/FILE_ID/view
- *   https://drive.google.com/open?id=FILE_ID
- *   https://drive.google.com/uc?id=FILE_ID
- *   https://drive.google.com/uc?export=view&id=FILE_ID
- * Returns an lh3.googleusercontent.com URL which works as a direct image src.
- */
-function toDirectImageUrl(url: string): string {
-  if (!url) return ''
-
-  // Already a direct lh3 URL
-  if (url.includes('lh3.googleusercontent.com')) return url
-
-  // Extract file ID from /file/d/FILE_ID/
-  const fileMatch = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/)
-  if (fileMatch) return `https://lh3.googleusercontent.com/d/${fileMatch[1]}`
-
-  // Extract from ?id=FILE_ID or &id=FILE_ID
-  const idMatch = url.match(/[?&]id=([a-zA-Z0-9_-]+)/)
-  if (idMatch) return `https://lh3.googleusercontent.com/d/${idMatch[1]}`
-
-  // If none matched, return as-is (might be a regular URL)
-  return url
-}
-
-const fallbackSlides: HeroSlide[] = [
-  {
-    id: '1',
-    heading: 'Learn AI Today. Lead Tomorrow.',
-    subheading: 'Transform your career with cutting-edge AI and technology education at Vectora Computer Institute.',
-    image_link: '',
-    button_text: 'Start Learning',
-    button_link: 'https://wa.me/918638373298',
-  },
-  {
-    id: '2',
-    heading: 'Code Your Future',
-    subheading: 'From web development to cybersecurity — master the skills that matter in the digital age.',
-    image_link: '',
-    button_text: 'Explore Courses',
-    button_link: 'https://wa.me/918638373298',
-  },
-  {
-    id: '3',
-    heading: 'Your Success Starts Here',
-    subheading: 'Industry-relevant courses, hands-on projects, and certification that employers trust.',
-    image_link: '',
-    button_text: 'Get Started',
-    button_link: 'https://wa.me/918638373298',
-  },
-]
 
 const gradients = [
   'radial-gradient(ellipse at 20% 50%, rgba(22,61,42,0.07) 0%, transparent 60%), radial-gradient(ellipse at 80% 20%, rgba(50,83,63,0.05) 0%, transparent 50%), var(--bg-primary)',
@@ -76,115 +20,134 @@ const gradients = [
   'radial-gradient(ellipse at 50% 40%, rgba(22,61,42,0.06) 0%, transparent 60%), radial-gradient(ellipse at 20% 80%, rgba(184,134,11,0.04) 0%, transparent 50%), var(--bg-primary)',
 ]
 
-export default function HeroSection() {
-  const [slides, setSlides] = useState<HeroSlide[]>(fallbackSlides)
-  const [currentSlide, setCurrentSlide] = useState(0)
-  const [imgError, setImgError] = useState<Record<string, boolean>>({})
+const subtitles = [
+  'Transform your career with cutting-edge AI and technology education at Vectora Computer Institute.',
+  'From web development to cybersecurity — master the skills that matter in the digital age.',
+  'Industry-relevant courses, hands-on projects, and certification that employers trust.',
+]
 
+export default function HeroSection() {
+  const [bgImages, setBgImages] = useState<HeroImage[]>([])
+  const [currentIdx, setCurrentIdx] = useState(0)
+  const [imgError, setImgError] = useState<Set<string>>(new Set())
+
+  // Fetch hero background images from the hero_images table
   useEffect(() => {
-    const fetchSlides = async () => {
+    const load = async () => {
       const supabase = createClient()
       const { data } = await supabase
-        .from('hero_slides')
+        .from('hero_images')
         .select('*')
         .eq('is_active', true)
         .order('sort_order', { ascending: true })
-
-      if (data && data.length > 0) setSlides(data)
+      if (data && data.length > 0) setBgImages(data)
     }
-    fetchSlides()
+    load()
   }, [])
 
-  const nextSlide = useCallback(() => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length)
-  }, [slides.length])
+  // Auto-rotate every 30 seconds
+  const advance = useCallback(() => {
+    setCurrentIdx(prev => (prev + 1) % Math.max(bgImages.length, 1))
+  }, [bgImages.length])
 
   useEffect(() => {
-    const timer = setInterval(nextSlide, 5000)
-    return () => clearInterval(timer)
-  }, [nextSlide])
+    if (bgImages.length <= 1) return
+    const t = setInterval(advance, 30_000)
+    return () => clearInterval(t)
+  }, [advance, bgImages.length])
 
-  const slide = slides[currentSlide]
-  const directImageUrl = toDirectImageUrl(slide.image_link)
-  const hasValidImage = !!directImageUrl && !imgError[slide.id]
+  const currentImage = bgImages[currentIdx]
+  const hasImage = !!currentImage && !imgError.has(currentImage.id)
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden" id="hero">
 
-      {/* ── Background Layer ── */}
-      <div className="absolute inset-0 z-0">
+      {/* ── Background ── */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
         <AnimatePresence mode="wait">
-          <motion.div
-            key={currentSlide}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.0 }}
-            className="absolute inset-0"
-          >
-            {/* Image background (Google Drive photo) */}
-            {hasValidImage ? (
-              <>
-                <img
-                  key={directImageUrl}
-                  src={directImageUrl}
-                  alt=""
-                  aria-hidden="true"
-                  onError={() => setImgError(prev => ({ ...prev, [slide.id]: true }))}
-                  className="absolute inset-0 w-full h-full object-cover"
-                  style={{ opacity: 0.30 }}
-                />
-                {/* Warm overlay so text stays readable */}
-                <div
-                  className="absolute inset-0"
-                  style={{ background: 'linear-gradient(to bottom, rgba(251,247,240,0.55) 0%, rgba(251,247,240,0.75) 70%, var(--bg-primary) 100%)' }}
-                />
-              </>
-            ) : (
-              /* Gradient fallback when no image */
+          {hasImage ? (
+            /* Photo from Google Drive — 65% opacity */
+            <motion.div
+              key={currentImage.id}
+              className="absolute inset-0"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.2 }}
+            >
+              <img
+                src={currentImage.image_url}
+                alt=""
+                aria-hidden="true"
+                className="absolute inset-0 w-full h-full object-cover"
+                style={{ opacity: 0.65 }}
+                onError={() => setImgError(prev => new Set(prev).add(currentImage.id))}
+              />
+              {/* Overlay so text is readable over the photo */}
               <div
                 className="absolute inset-0"
-                style={{ background: gradients[currentSlide % gradients.length] }}
+                style={{
+                  background: 'linear-gradient(to bottom, rgba(251,247,240,0.45) 0%, rgba(251,247,240,0.60) 60%, var(--bg-primary) 100%)',
+                }}
               />
-            )}
-          </motion.div>
+            </motion.div>
+          ) : (
+            /* Gradient fallback */
+            <motion.div
+              key={`grad-${currentIdx}`}
+              className="absolute inset-0"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1.0 }}
+              style={{ background: gradients[currentIdx % gradients.length] }}
+            />
+          )}
         </AnimatePresence>
+
+        {/* Slide dots — only show when there are multiple images */}
+        {bgImages.length > 1 && (
+          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 flex gap-2">
+            {bgImages.map((img, i) => (
+              <button
+                key={img.id}
+                onClick={() => setCurrentIdx(i)}
+                className="h-1.5 rounded-full transition-all duration-300"
+                style={{
+                  width: i === currentIdx ? 32 : 10,
+                  background: i === currentIdx ? 'var(--purple-600)' : 'var(--border-color)',
+                }}
+                aria-label={`Show image ${i + 1}`}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
-      {/* ── Floating Decorative Blobs ── */}
+      {/* ── Floating blobs ── */}
       <div className="absolute inset-0 z-[1] pointer-events-none overflow-hidden">
-        <motion.div
-          className="absolute w-72 h-72 rounded-full"
+        <motion.div className="absolute w-72 h-72 rounded-full"
           style={{ background: 'radial-gradient(circle, rgba(22,61,42,0.04) 0%, transparent 70%)', top: '10%', right: '5%' }}
-          animate={{ y: [0, -30, 0], x: [0, 15, 0] }}
-          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div
-          className="absolute w-96 h-96 rounded-full"
+          animate={{ y: [0, -30, 0], x: [0, 15, 0] }} transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }} />
+        <motion.div className="absolute w-96 h-96 rounded-full"
           style={{ background: 'radial-gradient(circle, rgba(184,134,11,0.03) 0%, transparent 70%)', bottom: '10%', left: '5%' }}
-          animate={{ y: [0, 20, 0], x: [0, -20, 0] }}
-          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-        />
+          animate={{ y: [0, 20, 0], x: [0, -20, 0] }} transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }} />
       </div>
 
       {/* ── Content ── */}
       <div className="relative z-10 container-main text-center max-w-4xl pt-36">
 
-        {/* Enrolling badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2 }}
+        {/* Badge */}
+        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
           className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-6"
-          style={{ background: 'rgba(22,61,42,0.04)', border: '1px solid var(--border-color)' }}
-        >
+          style={{ background: 'rgba(22,61,42,0.04)', border: '1px solid var(--border-color)' }}>
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse" />
           <span className="text-xs text-[var(--text-secondary)] font-semibold" style={{ fontFamily: 'var(--font-body)' }}>
             Now Enrolling for 2026 Batch
           </span>
         </motion.div>
 
-        {/* Heading */}
+        {/* Heading with typewriter */}
         <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}>
           <h1 className="text-3xl md:text-5xl font-bold leading-tight mb-4" style={{ fontFamily: 'var(--font-heading)' }}>
             <TypeAnimation
@@ -194,10 +157,7 @@ export default function HeroSection() {
                 'Build Digital Skills.', 2000,
                 'Lead Tomorrow.',     2000,
               ]}
-              wrapper="span"
-              speed={40}
-              repeat={Infinity}
-              className="text-gradient-purple"
+              wrapper="span" speed={40} repeat={Infinity} className="text-gradient-purple"
             />
             <br />
             <span className="text-[var(--text-secondary)] text-2xl md:text-3xl font-medium">
@@ -206,10 +166,10 @@ export default function HeroSection() {
           </h1>
         </motion.div>
 
-        {/* Subheading — changes per slide */}
+        {/* Subtitle — cycles with image */}
         <AnimatePresence mode="wait">
           <motion.p
-            key={currentSlide}
+            key={currentIdx}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
@@ -217,17 +177,13 @@ export default function HeroSection() {
             className="text-sm md:text-base text-[var(--text-secondary)] max-w-2xl mx-auto mb-8 leading-relaxed"
             style={{ fontFamily: 'var(--font-body)' }}
           >
-            {slide.subheading}
+            {subtitles[currentIdx % subtitles.length]}
           </motion.p>
         </AnimatePresence>
 
-        {/* CTA Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.8 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
-        >
+        {/* CTA buttons */}
+        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.8 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <a href="https://wa.me/918638373298" target="_blank" rel="noopener noreferrer" className="btn-primary text-lg">
             Start Learning <HiArrowRight />
           </a>
@@ -237,12 +193,8 @@ export default function HeroSection() {
         </motion.div>
 
         {/* Stats */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.2 }}
-          className="mt-16 grid grid-cols-3 gap-8 max-w-md mx-auto"
-        >
+        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.2 }}
+          className="mt-16 grid grid-cols-3 gap-8 max-w-md mx-auto">
           {[
             { value: '500+', label: 'Students Trained' },
             { value: '15+',  label: 'Courses' },
@@ -259,35 +211,18 @@ export default function HeroSection() {
 
         {/* Scroll indicator */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 2 }} className="mt-16">
-          <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 2, repeat: Infinity }} className="flex flex-col items-center gap-2">
+          <motion.div animate={{ y: [0, 10, 0] }} transition={{ duration: 2, repeat: Infinity }}
+            className="flex flex-col items-center gap-2">
             <span className="text-xs text-[var(--text-muted)] tracking-widest uppercase">Scroll Down</span>
             <div className="w-5 h-8 rounded-full flex justify-center pt-1.5" style={{ border: '1px solid var(--border-color)' }}>
               <motion.div
                 animate={{ y: [0, 8, 0], opacity: [1, 0.3, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
-                className="w-1 h-2 rounded-full"
-                style={{ background: 'var(--purple-600)' }}
+                className="w-1 h-2 rounded-full" style={{ background: 'var(--purple-600)' }}
               />
             </div>
           </motion.div>
         </motion.div>
-      </div>
-
-      {/* ── Slide Dots ── */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex gap-2">
-        {slides.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setCurrentSlide(i)}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              i === currentSlide ? 'w-8' : 'w-3 hover:opacity-70'
-            }`}
-            style={{
-              background: i === currentSlide ? 'var(--purple-600)' : 'var(--border-color)',
-            }}
-            aria-label={`Go to slide ${i + 1}`}
-          />
-        ))}
       </div>
     </section>
   )
