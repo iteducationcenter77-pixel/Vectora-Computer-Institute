@@ -32,8 +32,8 @@ export default function Navbar() {
       transition={{ duration: 0.6, ease: 'easeOut' }}
       className={`relative w-full z-50 transition-all duration-300 ${
         isScrolled
-          ? 'py-3'
-          : 'py-5'
+          ? 'py-4'
+          : 'py-6'
       }`}
       style={{
         background: 'var(--bg-glass)',
@@ -73,7 +73,7 @@ export default function Navbar() {
             href="https://wa.me/918638373298"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-primary !py-2.5 !px-5 !text-sm whitespace-nowrap"
+            className="btn-primary !py-1.5 !px-4 !text-xs whitespace-nowrap"
           >
             Contact Us
           </a>

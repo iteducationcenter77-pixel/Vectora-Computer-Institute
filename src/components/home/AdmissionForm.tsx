@@ -84,7 +84,7 @@ export default function AdmissionForm() {
           </motion.div>
         ) : (
           <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
-            className="glass-card p-5 sm:p-8">
+            className="glass-card p-8 sm:p-10">
 
             <form onSubmit={handleSubmit} noValidate>
               {/* ── Row 1: Name + Phone ── */}
