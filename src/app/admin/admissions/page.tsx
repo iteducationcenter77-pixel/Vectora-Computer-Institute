@@ -16,7 +16,10 @@ export default function AdminAdmissionsPage() {
     const { data } = await s.from('admissions').select('*').order('created_at', { ascending: false })
     if (data) setAdmissions(data)
   }
-  useEffect(() => { fetchData() }, [])
+  useEffect(() => {
+    const timer = window.setTimeout(() => { void fetchData() }, 0)
+    return () => window.clearTimeout(timer)
+  }, [])
 
   const updateStatus = async (id: string, status: string) => {
     await createClient().from('admissions').update({ status }).eq('id', id)
@@ -44,8 +47,8 @@ export default function AdminAdmissionsPage() {
     <div>
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-white" style={{ fontFamily: 'var(--font-heading)' }}>Admissions</h1>
-          <p className="text-sm text-gray-400">{admissions.length} submissions</p>
+          <h1 className="admin-page-title">Admissions</h1>
+          <p className="admin-page-subtitle">{admissions.length} submissions</p>
         </div>
         <button onClick={exportCSV} className="btn-secondary !py-2 !px-4 !text-sm"><HiDownload /> Export CSV</button>
       </div>

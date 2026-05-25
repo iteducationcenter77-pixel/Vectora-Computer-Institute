@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { HiMenu, HiX } from 'react-icons/hi'
 
@@ -26,7 +27,7 @@ export default function Navbar() {
 
   return (
     <motion.nav
-      initial={{ y: -100 }}
+      initial={false}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
       className={`relative w-full z-50 transition-all duration-300 ${
@@ -43,19 +44,17 @@ export default function Navbar() {
     >
       <div className="container-main flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 group">
-          <div className="relative">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#163D2A] to-[#234934] flex items-center justify-center font-bold text-white text-lg animate-gradient"
-              style={{ fontFamily: 'var(--font-heading)' }}>
-              V
+        <Link href="/" className="flex items-center gap-3 group min-w-0" aria-label="Vectora Computer Institute home">
+          <div className="relative shrink-0">
+            <div className="w-11 h-11 rounded-lg bg-white border border-[var(--border-color)] flex items-center justify-center p-1.5 shadow-sm">
+              <Image src="/vec-logo.png" alt="Vectora logo" width={36} height={36} className="h-full w-full object-contain" priority />
             </div>
-            <div className="absolute -inset-1 rounded-xl bg-[#163D2A]/10 blur-sm group-hover:bg-[#163D2A]/20 transition-all" />
           </div>
-          <div>
-            <span className="text-xl font-bold tracking-tight" style={{ fontFamily: 'var(--font-heading)' }}>
+          <div className="min-w-0">
+            <span className="block text-xl font-bold tracking-tight leading-tight" style={{ fontFamily: 'var(--font-heading)' }}>
               <span className="text-[var(--text-primary)]">Vectora</span>
             </span>
-            <p className="text-[0.6rem] text-[var(--text-secondary)] -mt-1 tracking-widest uppercase">Computer Institute</p>
+            <p className="text-[0.6rem] text-[var(--text-secondary)] tracking-widest uppercase leading-tight">Computer Institute</p>
           </div>
         </Link>
 
@@ -76,7 +75,7 @@ export default function Navbar() {
             href="https://wa.me/918638373298"
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-primary !py-2.5 !px-5 !text-sm"
+            className="btn-primary !py-2.5 !px-5 !text-sm whitespace-nowrap"
           >
             Contact Us
           </a>
@@ -85,7 +84,7 @@ export default function Navbar() {
         {/* Mobile Toggle */}
         <button
           onClick={() => setIsMobileOpen(!isMobileOpen)}
-          className="md:hidden text-[var(--text-primary)] text-2xl p-2"
+          className="md:hidden text-[var(--text-primary)] text-2xl p-2 rounded-lg"
           aria-label="Toggle menu"
         >
           {isMobileOpen ? <HiX /> : <HiMenu />}
@@ -127,7 +126,7 @@ export default function Navbar() {
                 href="https://wa.me/918638373298"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="btn-primary !text-center mt-2"
+                className="btn-primary !justify-center !text-center mt-2"
               >
                 Contact Us
               </a>

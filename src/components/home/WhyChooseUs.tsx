@@ -38,8 +38,7 @@ export default function WhyChooseUs() {
     <section className="section-padding relative" id="why-us" style={{ background: 'var(--bg-secondary)' }}>
       <div className="container-main">
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs mb-4"
-            style={{ background: 'rgba(22, 61, 42, 0.04)', border: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}><HiBadgeCheck /> Why Choose Us</div>
+          <div className="section-eyebrow mb-4"><HiBadgeCheck /> Why Choose Us</div>
           <h2 className="text-2xl md:text-3xl font-bold mb-4" style={{ fontFamily: 'var(--font-heading)' }}>
             Why Students <span className="text-gradient-purple">Love Us</span>
           </h2>
@@ -51,12 +50,12 @@ export default function WhyChooseUs() {
           {features.map((f, i) => (
             <motion.div key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}>
-              <div className="glass-card p-5 flex flex-col items-start text-left h-full group">
-                <div className="w-10 h-10 rounded-xl bg-[var(--bg-tertiary)] flex items-center justify-center text-lg text-[var(--text-primary)] mb-3.5 group-hover:scale-110 transition-transform duration-300">
+              <div className="glass-card p-5 flex flex-col items-start text-left h-full min-h-[168px] group">
+                <div className="icon-plate text-lg mb-3.5 group-hover:scale-105 transition-transform duration-300">
                   {f.icon}
                 </div>
-                <h3 className="text-sm font-semibold text-[var(--text-primary)] mb-1" style={{ fontFamily: 'var(--font-heading)' }}>{f.title}</h3>
-                <p className="text-[0.825rem] text-[var(--text-secondary)] leading-relaxed">{f.desc}</p>
+                <h3 className="card-title !text-[0.95rem] mb-1.5">{f.title}</h3>
+                <p className="card-text !text-[0.825rem]">{f.desc}</p>
               </div>
             </motion.div>
           ))}

@@ -26,7 +26,10 @@ export default function CertificatesPage() {
     if (data) setCerts(data)
   }
 
-  useEffect(() => { fetchCerts() }, [])
+  useEffect(() => {
+    const timer = window.setTimeout(() => { void fetchCerts() }, 0)
+    return () => window.clearTimeout(timer)
+  }, [])
 
   const generateCode = (course: string) => {
     const abbr = courseAbbr[course] || 'GEN'
@@ -84,8 +87,8 @@ export default function CertificatesPage() {
     <div>
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-white" style={{ fontFamily: 'var(--font-heading)' }}>Certificates</h1>
-          <p className="text-sm text-gray-400">{certs.length} total certificates</p>
+          <h1 className="admin-page-title">Certificates</h1>
+          <p className="admin-page-subtitle">{certs.length} total certificates</p>
         </div>
         <div className="flex gap-3">
           <button onClick={exportCSV} className="btn-secondary !py-2 !px-4 !text-sm"><HiDownload /> Export</button>

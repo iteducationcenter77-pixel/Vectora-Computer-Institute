@@ -20,7 +20,10 @@ export default function AdminGalleryPage() {
     const { data } = await s.from('gallery').select('*').order('sort_order')
     if (data) setImages(data)
   }
-  useEffect(() => { fetchImages() }, [])
+  useEffect(() => {
+    const timer = window.setTimeout(() => { void fetchImages() }, 0)
+    return () => window.clearTimeout(timer)
+  }, [])
 
   const handleAdd = async () => {
     if (!form.image_link) return
@@ -40,8 +43,8 @@ export default function AdminGalleryPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-white" style={{ fontFamily: 'var(--font-heading)' }}>Gallery</h1>
-          <p className="text-sm text-gray-400">{images.length} images</p>
+          <h1 className="admin-page-title">Gallery</h1>
+          <p className="admin-page-subtitle">{images.length} images</p>
         </div>
         <button onClick={() => setShowModal(true)} className="btn-primary !py-2 !px-4 !text-sm"><HiPlus /> Add Image</button>
       </div>

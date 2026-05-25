@@ -55,9 +55,8 @@ export default function CoursesPage() {
   return (
     <div className="pt-32 pb-20">
       <div className="container-main">
-        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs mb-4"
-            style={{ background: 'rgba(22, 61, 42, 0.04)', border: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}><FaGraduationCap /> All Courses</div>
+        <motion.div initial={false} animate={{ opacity: 1, y: 0 }} className="text-center mb-12">
+          <div className="section-eyebrow mb-4"><FaGraduationCap /> All Courses</div>
           <h1 className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: 'var(--font-heading)' }}>
             Our <span className="text-gradient-purple">Programs</span>
           </h1>
@@ -67,31 +66,31 @@ export default function CoursesPage() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {list.map((c, i) => (
-            <motion.div key={c.id} initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}>
-              <div className="glass-card p-5 h-full border border-[var(--border-color)]">
-                <div className="flex items-start gap-4 mb-4">
-                  <div className="w-10 h-10 rounded-xl bg-[var(--bg-tertiary)] flex items-center justify-center shrink-0">
+            <motion.div key={c.id} initial={false} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}>
+              <div className="glass-card p-5 sm:p-6 h-full min-h-[280px] flex flex-col">
+                <div className="flex items-start gap-4 mb-4 min-w-0">
+                  <div className="icon-plate shrink-0">
                     {getCourseIcon(c.course_name)}
                   </div>
-                  <div className="flex-1">
-                    <h2 className="text-base font-semibold text-[var(--text-primary)] mb-1" style={{ fontFamily: 'var(--font-heading)' }}>{c.course_name}</h2>
-                    <div className="flex items-center gap-5">
-                      <span className="flex items-center gap-2 text-xs text-[var(--text-secondary)] font-medium"><HiClock className="text-emerald-700" size={14} /> {c.duration}</span>
-                      <span className="flex items-center gap-2 text-xs text-[var(--gold-300)] font-semibold"><HiCurrencyRupee className="text-emerald-700" size={14} /> {c.fees}</span>
+                  <div className="flex-1 min-w-0">
+                    <h2 className="card-title mb-2">{c.course_name}</h2>
+                    <div className="meta-row">
+                      <span className="meta-pill"><HiClock className="text-emerald-700" size={14} /> {c.duration}</span>
+                      <span className="meta-pill !text-[var(--gold-300)]"><HiCurrencyRupee className="text-emerald-700" size={14} /> {c.fees}</span>
                     </div>
                   </div>
                 </div>
-                <p className="text-[var(--text-secondary)] text-[0.825rem] mb-4 leading-relaxed">{c.description}</p>
+                <p className="card-text mb-5">{c.description}</p>
 
                 <AnimatePresence>
                   {expanded === c.id && c.benefits?.length > 0 && (
                     <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}
                       className="mb-4 overflow-hidden">
                       <p className="text-[0.7rem] text-[var(--text-muted)] uppercase tracking-wider mb-2 font-bold">What You&apos;ll Learn</p>
-                      <div className="grid grid-cols-2 gap-2">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                         {c.benefits.map((b, j) => (
-                          <div key={j} className="flex items-center gap-1.5 text-xs text-[var(--text-secondary)]">
-                            <HiCheckCircle className="text-emerald-700 shrink-0" /> {b}
+                          <div key={j} className="flex items-start gap-2 text-xs text-[var(--text-secondary)] leading-snug">
+                            <HiCheckCircle className="text-emerald-700 shrink-0 mt-0.5" /> <span>{b}</span>
                           </div>
                         ))}
                       </div>
@@ -99,7 +98,7 @@ export default function CoursesPage() {
                   )}
                 </AnimatePresence>
 
-                <div className="flex items-center justify-between">
+                <div className="flex flex-wrap items-center justify-between gap-3 mt-auto pt-2">
                   <button onClick={() => setExpanded(expanded === c.id ? null : c.id)}
                     className="text-xs text-[var(--text-primary)] font-semibold transition-colors">
                     {expanded === c.id ? 'Show Less' : 'View Details'}

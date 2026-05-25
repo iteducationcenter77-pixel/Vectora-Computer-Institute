@@ -15,9 +15,8 @@ export default function ContactSection() {
     <section className="section-padding relative" id="contact" style={{ background: 'var(--bg-secondary)' }}>
       <div className="container-main">
         <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs mb-4"
-            style={{ background: 'rgba(22, 61, 42, 0.04)', border: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}><FaPhoneAlt size={11} /> Contact</div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4" style={{ fontFamily: 'var(--font-heading)' }}>
+          <div className="section-eyebrow mb-4"><FaPhoneAlt size={11} /> Contact</div>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: 'var(--font-heading)' }}>
             Get In <span className="text-gradient-purple">Touch</span>
           </h2>
           <p className="text-[var(--text-secondary)] max-w-xl mx-auto">Have questions? We&apos;d love to hear from you.</p>
@@ -31,18 +30,18 @@ export default function ContactSection() {
                 transition={{ delay: i * 0.1 }}>
                 {c.href ? (
                   <a href={c.href} target={c.href.startsWith('http') ? '_blank' : undefined} rel="noopener noreferrer" className="glass-card p-5 flex items-center gap-4 group">
-                    <div className="w-12 h-12 rounded-xl bg-[var(--bg-tertiary)] flex items-center justify-center text-[var(--text-primary)] group-hover:scale-110 transition-transform">{c.icon}</div>
-                    <div>
+                    <div className="icon-plate !w-12 !h-12 !min-w-12 !min-h-12 group-hover:scale-105 transition-transform">{c.icon}</div>
+                    <div className="min-w-0">
                       <p className="text-xs text-[var(--text-muted)] mb-0.5 font-medium">{c.label}</p>
-                      <p className="text-[var(--text-primary)] font-bold">{c.value}</p>
+                      <p className="text-[var(--text-primary)] font-bold leading-snug">{c.value}</p>
                     </div>
                   </a>
                 ) : (
                   <div className="glass-card p-5 flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-xl bg-[var(--bg-tertiary)] flex items-center justify-center text-[var(--text-primary)]">{c.icon}</div>
-                    <div>
+                    <div className="icon-plate !w-12 !h-12 !min-w-12 !min-h-12">{c.icon}</div>
+                    <div className="min-w-0">
                       <p className="text-xs text-[var(--text-muted)] mb-0.5 font-medium">{c.label}</p>
-                      <p className="text-[var(--text-primary)] font-bold">{c.value}</p>
+                      <p className="text-[var(--text-primary)] font-bold leading-snug">{c.value}</p>
                     </div>
                   </div>
                 )}

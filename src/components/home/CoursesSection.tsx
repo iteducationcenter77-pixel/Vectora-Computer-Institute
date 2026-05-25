@@ -51,9 +51,8 @@ export default function CoursesSection() {
   return (
     <section className="section-padding relative" id="courses">
       <div className="container-main">
-        <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs mb-4"
-            style={{ background: 'rgba(22, 61, 42, 0.04)', border: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}><FaGraduationCap /> Our Courses</div>
+        <motion.div initial={false} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="text-center mb-12">
+          <div className="section-eyebrow mb-4"><FaGraduationCap /> Our Courses</div>
           <h2 className="text-3xl md:text-4xl font-bold mb-4" style={{ fontFamily: 'var(--font-heading)' }}>
             Explore Our <span className="text-gradient-purple">Programs</span>
           </h2>
@@ -63,20 +62,20 @@ export default function CoursesSection() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {list.map((c, i) => (
-            <motion.div key={c.id} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
+            <motion.div key={c.id} initial={false} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               transition={{ delay: i * 0.08, duration: 0.5 }}>
-              <div className="glass-card p-6 h-full flex flex-col justify-between group cursor-pointer border border-[var(--border-color)]">
-                <div>
-                  <div className="w-10 h-10 rounded-xl bg-[var(--bg-tertiary)] flex items-center justify-center mb-4 group-hover:scale-105 transition-transform">
+              <div className="glass-card p-5 sm:p-6 h-full min-h-[260px] flex flex-col justify-between gap-5 group cursor-pointer">
+                <div className="min-w-0">
+                  <div className="icon-plate mb-4 group-hover:scale-105 transition-transform">
                     {getCourseIcon(c.course_name)}
                   </div>
-                  <h3 className="text-base font-semibold text-[var(--text-primary)] mb-2 transition-colors" style={{ fontFamily: 'var(--font-heading)' }}>{c.course_name}</h3>
-                  <p className="text-[0.825rem] text-[var(--text-secondary)] mb-5 line-clamp-2 leading-relaxed">{c.description}</p>
+                  <h3 className="card-title mb-2 transition-colors">{c.course_name}</h3>
+                  <p className="card-text line-clamp-3">{c.description}</p>
                 </div>
                 <div>
-                  <div className="flex items-center gap-5 mb-4">
-                    <span className="flex items-center gap-2 text-xs text-[var(--text-secondary)] font-medium"><HiClock className="text-emerald-700" size={14} /> {c.duration}</span>
-                    <span className="flex items-center gap-2 text-xs text-[var(--gold-300)] font-semibold"><HiCurrencyRupee className="text-emerald-700" size={14} /> {c.fees}</span>
+                  <div className="meta-row mb-4">
+                    <span className="meta-pill"><HiClock className="text-emerald-700" size={14} /> {c.duration}</span>
+                    <span className="meta-pill !text-[var(--gold-300)]"><HiCurrencyRupee className="text-emerald-700" size={14} /> {c.fees}</span>
                   </div>
                   <a href="https://wa.me/918638373298" target="_blank" rel="noopener noreferrer"
                     className="flex items-center gap-1.5 text-xs text-[var(--text-primary)] font-semibold transition-colors hover:text-[var(--purple-500)] mt-auto pt-2">

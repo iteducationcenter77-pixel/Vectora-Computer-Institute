@@ -18,7 +18,10 @@ export default function AdminCoursesPage() {
     const { data } = await s.from('courses').select('*').order('sort_order')
     if (data) setCourses(data)
   }
-  useEffect(() => { fetch() }, [])
+  useEffect(() => {
+    const timer = window.setTimeout(() => { void fetch() }, 0)
+    return () => window.clearTimeout(timer)
+  }, [])
 
   const openAdd = () => {
     setForm({ course_name: '', duration: '', fees: '', description: '', benefits: '', image: '', is_active: true, sort_order: courses.length })
@@ -53,8 +56,8 @@ export default function AdminCoursesPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-white" style={{ fontFamily: 'var(--font-heading)' }}>Courses</h1>
-          <p className="text-sm text-gray-400">{courses.length} total courses</p>
+          <h1 className="admin-page-title">Courses</h1>
+          <p className="admin-page-subtitle">{courses.length} total courses</p>
         </div>
         <button onClick={openAdd} className="btn-primary !py-2 !px-4 !text-sm"><HiPlus /> Add Course</button>
       </div>
@@ -63,21 +66,21 @@ export default function AdminCoursesPage() {
         {courses.map((c, i) => (
           <motion.div key={c.id} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.05 }}
             className={`admin-card ${!c.is_active ? 'opacity-50' : ''}`}>
-            <div className="flex items-start justify-between mb-3">
-              <h3 className="text-lg font-bold text-white" style={{ fontFamily: 'var(--font-heading)' }}>{c.course_name}</h3>
-              <div className="flex gap-1">
+            <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-3">
+              <h3 className="card-title flex-1 min-w-0">{c.course_name}</h3>
+              <div className="flex flex-wrap gap-1.5 shrink-0">
                 <button onClick={() => toggleActive(c.id, c.is_active)}
-                  className={`px-2 py-1 rounded text-xs ${c.is_active ? 'bg-green-500/10 text-green-400' : 'bg-gray-500/10 text-gray-400'}`}>
+                  className={`badge ${c.is_active ? 'badge-verified' : 'bg-gray-500/10 text-gray-400'}`}>
                   {c.is_active ? 'Active' : 'Inactive'}
                 </button>
-                <button onClick={() => openEdit(c)} className="p-1.5 rounded-lg hover:bg-purple-500/10 text-purple-400"><HiPencil /></button>
-                <button onClick={() => handleDelete(c.id)} className="p-1.5 rounded-lg hover:bg-red-500/10 text-red-400"><HiTrash /></button>
+                <button onClick={() => openEdit(c)} className="admin-action-icon hover:bg-purple-500/10 text-purple-400" aria-label={`Edit ${c.course_name}`}><HiPencil /></button>
+                <button onClick={() => handleDelete(c.id)} className="admin-action-icon hover:bg-red-500/10 text-red-400" aria-label={`Delete ${c.course_name}`}><HiTrash /></button>
               </div>
             </div>
-            <p className="text-sm text-gray-400 mb-2 line-clamp-2">{c.description}</p>
-            <div className="flex gap-4 text-xs text-gray-500">
-              <span>⏱ {c.duration}</span>
-              <span>💰 {c.fees}</span>
+            <p className="card-text !text-sm mb-4 line-clamp-3">{c.description}</p>
+            <div className="meta-row text-xs">
+              <span className="meta-pill">{c.duration}</span>
+              <span className="meta-pill">{c.fees}</span>
             </div>
           </motion.div>
         ))}

@@ -18,7 +18,10 @@ export default function AdminHeroPage() {
     const { data } = await s.from('hero_slides').select('*').order('sort_order')
     if (data) setSlides(data)
   }
-  useEffect(() => { fetchSlides() }, [])
+  useEffect(() => {
+    const timer = window.setTimeout(() => { void fetchSlides() }, 0)
+    return () => window.clearTimeout(timer)
+  }, [])
 
   const openAdd = () => {
     setForm({ image_link: '', heading: '', subheading: '', button_text: 'Start Learning', button_link: 'https://wa.me/918638373298', is_active: true, sort_order: slides.length })
@@ -52,8 +55,8 @@ export default function AdminHeroPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-white" style={{ fontFamily: 'var(--font-heading)' }}>Hero Slides</h1>
-          <p className="text-sm text-gray-400">{slides.length} slides</p>
+          <h1 className="admin-page-title">Hero Slides</h1>
+          <p className="admin-page-subtitle">{slides.length} slides</p>
         </div>
         <button onClick={openAdd} className="btn-primary !py-2 !px-4 !text-sm"><HiPlus /> Add Slide</button>
       </div>

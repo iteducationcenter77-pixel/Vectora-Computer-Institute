@@ -18,7 +18,10 @@ export default function AdminAnnouncementsPage() {
     const { data } = await s.from('announcements').select('*').order('created_at', { ascending: false })
     if (data) setAnnouncements(data)
   }
-  useEffect(() => { fetchData() }, [])
+  useEffect(() => {
+    const timer = window.setTimeout(() => { void fetchData() }, 0)
+    return () => window.clearTimeout(timer)
+  }, [])
 
   const openAdd = () => { setForm({ message: '', is_active: true }); setEditId(null); setShowModal(true) }
   const openEdit = (a: Announcement) => { setForm({ message: a.message, is_active: a.is_active }); setEditId(a.id); setShowModal(true) }
@@ -45,8 +48,8 @@ export default function AdminAnnouncementsPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-2xl font-bold text-white" style={{ fontFamily: 'var(--font-heading)' }}>Announcements</h1>
-          <p className="text-sm text-gray-400">{announcements.length} announcements</p>
+          <h1 className="admin-page-title">Announcements</h1>
+          <p className="admin-page-subtitle">{announcements.length} announcements</p>
         </div>
         <button onClick={openAdd} className="btn-primary !py-2 !px-4 !text-sm"><HiPlus /> Add</button>
       </div>

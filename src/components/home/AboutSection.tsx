@@ -15,8 +15,7 @@ export default function AboutSection() {
             viewport={{ once: true, margin: '-100px' }}
             transition={{ duration: 0.8 }}
           >
-            <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs mb-6"
-              style={{ background: 'rgba(22, 61, 42, 0.04)', border: '1px solid var(--border-color)', color: 'var(--text-secondary)' }}>
+            <div className="section-eyebrow mb-6">
               <HiLightBulb /> About Us
             </div>
             
@@ -56,7 +55,7 @@ export default function AboutSection() {
           >
             <div className="relative">
               {/* Main Card */}
-              <div className="glass-card p-6 relative overflow-hidden">
+              <div className="glass-card p-5 sm:p-6 relative overflow-hidden">
                 <div className="space-y-4">
                   {/* Feature Items */}
                   {[
@@ -70,14 +69,14 @@ export default function AboutSection() {
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
                       transition={{ delay: 0.4 + i * 0.15 }}
-                      className="flex gap-4 p-3 rounded-xl transition-all"
+                      className="flex gap-4 p-3 rounded-lg transition-all"
                     >
-                      <div className="w-10 h-10 rounded-lg bg-[var(--bg-tertiary)] flex items-center justify-center text-[var(--text-primary)] shrink-0">
+                      <div className="icon-plate">
                         {item.icon}
                       </div>
-                      <div>
-                        <h4 className="font-semibold text-sm text-[var(--text-primary)] mb-0.5" style={{ fontFamily: 'var(--font-heading)' }}>{item.title}</h4>
-                        <p className="text-[0.825rem] text-[var(--text-secondary)] leading-relaxed">{item.desc}</p>
+                      <div className="min-w-0">
+                        <h4 className="card-title !text-[0.925rem] mb-1">{item.title}</h4>
+                        <p className="card-text !text-[0.825rem]">{item.desc}</p>
                       </div>
                     </motion.div>
                   ))}

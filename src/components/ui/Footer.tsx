@@ -1,6 +1,7 @@
-'use client'
+﻿'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { FaWhatsapp, FaPhoneAlt, FaEnvelope, FaMapMarkerAlt, FaGlobe } from 'react-icons/fa'
 
 const footerLinks = [
@@ -23,16 +24,14 @@ export default function Footer() {
     <footer style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-color)' }}>
       <div className="container-main py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-          {/* Brand */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#163D2A] to-[#234934] flex items-center justify-center font-bold text-white text-lg animate-gradient"
-                style={{ fontFamily: 'var(--font-heading)' }}>
-                V
+              <div className="w-11 h-11 rounded-lg bg-white border border-[var(--border-color)] flex items-center justify-center p-1.5 shadow-sm shrink-0">
+                <Image src="/vec-logo.png" alt="Vectora logo" width={36} height={36} className="h-full w-full object-contain" />
               </div>
-              <div>
-                <span className="text-lg font-bold text-[var(--text-primary)]" style={{ fontFamily: 'var(--font-heading)' }}>Vectora</span>
-                <p className="text-[0.55rem] text-[var(--text-secondary)] -mt-1 tracking-widest uppercase">Computer Institute</p>
+              <div className="min-w-0">
+                <span className="block text-lg font-bold text-[var(--text-primary)] leading-tight" style={{ fontFamily: 'var(--font-heading)' }}>Vectora</span>
+                <p className="text-[0.55rem] text-[var(--text-secondary)] tracking-widest uppercase leading-tight">Computer Institute</p>
               </div>
             </div>
             <p className="text-sm text-[var(--text-secondary)] leading-relaxed mb-4">
@@ -40,21 +39,20 @@ export default function Footer() {
             </p>
             <div className="flex gap-3">
               <a href="https://wa.me/918638373298" target="_blank" rel="noopener noreferrer"
-                className="w-9 h-9 rounded-lg bg-[var(--purple-600)]/10 flex items-center justify-center text-[var(--purple-600)] hover:bg-[var(--purple-600)]/20 transition-all">
+                className="w-9 h-9 rounded-lg bg-[var(--purple-600)]/10 flex items-center justify-center text-[var(--purple-600)] hover:bg-[var(--purple-600)]/20 transition-all" aria-label="WhatsApp">
                 <FaWhatsapp />
               </a>
               <a href="tel:+918638373298"
-                className="w-9 h-9 rounded-lg bg-[var(--purple-600)]/10 flex items-center justify-center text-[var(--purple-600)] hover:bg-[var(--purple-600)]/20 transition-all">
+                className="w-9 h-9 rounded-lg bg-[var(--purple-600)]/10 flex items-center justify-center text-[var(--purple-600)] hover:bg-[var(--purple-600)]/20 transition-all" aria-label="Call Vectora">
                 <FaPhoneAlt size={13} />
               </a>
               <a href="mailto:vectora.help@gmail.com"
-                className="w-9 h-9 rounded-lg bg-[var(--gold-300)]/10 flex items-center justify-center text-[var(--gold-300)] hover:bg-[var(--gold-300)]/20 transition-all">
+                className="w-9 h-9 rounded-lg bg-[var(--gold-300)]/10 flex items-center justify-center text-[var(--gold-300)] hover:bg-[var(--gold-300)]/20 transition-all" aria-label="Email Vectora">
                 <FaEnvelope size={13} />
               </a>
             </div>
           </div>
 
-          {/* Links */}
           {footerLinks.map((section) => (
             <div key={section.title}>
               <h4 className="text-sm font-semibold text-[var(--text-primary)] mb-4 tracking-wide" style={{ fontFamily: 'var(--font-heading)' }}>
@@ -72,33 +70,31 @@ export default function Footer() {
             </div>
           ))}
 
-          {/* Contact */}
           <div>
             <h4 className="text-sm font-semibold text-[var(--text-primary)] mb-4 tracking-wide" style={{ fontFamily: 'var(--font-heading)' }}>
               Contact Us
             </h4>
             <ul className="space-y-3">
-              <li className="flex items-start gap-2.5 text-sm text-[var(--text-secondary)]">
+              <li className="flex items-start gap-2.5 text-sm text-[var(--text-secondary)] leading-relaxed">
                 <FaMapMarkerAlt className="text-[var(--text-primary)] mt-1 shrink-0" />
-                Howly, Assam (Near Dorika)
+                <span>Howly, Assam (Near Dorika)</span>
               </li>
               <li className="flex items-center gap-2.5 text-sm text-[var(--text-secondary)]">
                 <FaPhoneAlt className="text-[var(--text-primary)] shrink-0" size={13} />
-                +91 8638373298
+                <span>+91 8638373298</span>
               </li>
               <li className="flex items-center gap-2.5 text-sm text-[var(--text-secondary)]">
                 <FaEnvelope className="text-[var(--text-primary)] shrink-0" size={13} />
-                vectora.help@gmail.com
+                <span>vectora.help@gmail.com</span>
               </li>
               <li className="flex items-center gap-2.5 text-sm text-[var(--text-secondary)]">
                 <FaGlobe className="text-[var(--text-primary)] shrink-0" size={13} />
-                cbceskillindia.in
+                <span>cbceskillindia.in</span>
               </li>
             </ul>
           </div>
         </div>
 
-        {/* Bottom Bar */}
         <div className="mt-12 pt-6 flex flex-col md:flex-row items-center justify-between gap-4"
           style={{ borderTop: '1px solid var(--border-color)' }}>
           <p className="text-xs text-[var(--text-muted)]">

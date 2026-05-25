@@ -57,6 +57,8 @@
   /* Spacing */
   --section-padding: 5rem 1.5rem;
   --container-max: 1200px;
+  --radius-card: 0.5rem;
+  --radius-control: 0.5rem;
 
   /* Effects */
   --glow-purple: 0 4px 20px rgba(22, 61, 42, 0.04);
@@ -89,6 +91,14 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+img, svg {
+  max-width: 100%;
+}
+
+p, li, h1, h2, h3, h4, h5, h6, span, a, button, label, td, th {
+  overflow-wrap: anywhere;
 }
 
 /* Custom Scrollbar */
@@ -158,21 +168,88 @@ a {
 .glass {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: 1.5rem;
+  border-radius: var(--radius-card);
 }
 
 .glass-card {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: 1.5rem;
+  border-radius: var(--radius-card);
   transition: var(--transition-smooth);
-  box-shadow: 0 1px 3px rgba(22, 61, 42, 0.02);
+  box-shadow: 0 10px 28px rgba(22, 61, 42, 0.045);
+  overflow: hidden;
 }
 
 .glass-card:hover {
   border-color: var(--border-glow);
   box-shadow: 0 12px 30px rgba(22, 61, 42, 0.06);
   transform: translateY(-2px);
+}
+
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  max-width: 100%;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(22, 61, 42, 0.04);
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.icon-plate {
+  width: 2.75rem;
+  height: 2.75rem;
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-control);
+  background: var(--bg-tertiary);
+  border: 1px solid rgba(22, 61, 42, 0.06);
+  color: var(--text-primary);
+  line-height: 1;
+}
+
+.card-title {
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0;
+}
+
+.card-text {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+  line-height: 1.65;
+}
+
+.meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 1rem;
+}
+
+.meta-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 1.75rem;
+  padding: 0.25rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(22, 61, 42, 0.04);
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.2;
 }
 
 /* ========================================
@@ -189,7 +266,7 @@ a {
   font-weight: 600;
   font-size: 0.9rem;
   border: none;
-  border-radius: 0.5rem;
+  border-radius: var(--radius-control);
   cursor: pointer;
   transition: var(--transition-smooth);
   position: relative;
@@ -213,7 +290,7 @@ a {
   font-weight: 600;
   font-size: 0.9rem;
   border: 1px solid var(--border-color);
-  border-radius: 0.5rem;
+  border-radius: var(--radius-control);
   cursor: pointer;
   transition: var(--transition-smooth);
 }
@@ -235,7 +312,7 @@ a {
   font-weight: 600;
   font-size: 0.9rem;
   border: 1px solid var(--border-color);
-  border-radius: 0.5rem;
+  border-radius: var(--radius-control);
   cursor: pointer;
   transition: var(--transition-smooth);
 }
@@ -353,13 +430,15 @@ a {
    ======================================== */
 .input-glass {
   width: 100%;
-  padding: 0.55rem 1rem;
+  min-height: 2.75rem;
+  padding: 0.7rem 0.95rem;
   background: #ffffff;
   border: 1px solid var(--border-color);
-  border-radius: 0.5rem;
+  border-radius: var(--radius-control);
   color: var(--text-primary);
   font-family: var(--font-body);
   font-size: 0.875rem;
+  line-height: 1.35;
   outline: none;
   transition: var(--transition-smooth);
 }
@@ -375,7 +454,8 @@ a {
 
 textarea.input-glass {
   resize: vertical;
-  min-height: 100px;
+  min-height: 112px;
+  line-height: 1.55;
 }
 
 select.input-glass {
@@ -400,10 +480,13 @@ select.input-glass {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  padding: 0.75rem 1.25rem;
-  border-radius: 0.5rem;
+  min-height: 2.75rem;
+  padding: 0.72rem 0.95rem;
+  border-radius: var(--radius-control);
   color: var(--text-secondary);
   font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.3;
   transition: var(--transition-smooth);
   cursor: pointer;
 }
@@ -419,11 +502,13 @@ select.input-glass {
 }
 
 .admin-card {
-  background: var(--bg-secondary);
+  background: var(--bg-card);
   border: 1px solid var(--border-color);
-  border-radius: 1rem;
-  padding: 1.5rem;
+  border-radius: var(--radius-card);
+  padding: 1.35rem;
   transition: var(--transition-smooth);
+  box-shadow: 0 10px 24px rgba(22, 61, 42, 0.035);
+  overflow: hidden;
 }
 
 .admin-card:hover {
@@ -433,10 +518,11 @@ select.input-glass {
 .admin-table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 720px;
 }
 
 .admin-table th {
-  padding: 0.75rem 1rem;
+  padding: 0.9rem 1rem;
   text-align: left;
   font-weight: 600;
   font-size: 0.85rem;
@@ -447,10 +533,12 @@ select.input-glass {
 }
 
 .admin-table td {
-  padding: 0.75rem 1rem;
+  padding: 0.95rem 1rem;
   font-size: 0.9rem;
   color: var(--text-secondary);
   border-bottom: 1px solid rgba(139, 92, 246, 0.05);
+  line-height: 1.45;
+  vertical-align: top;
 }
 
 .admin-table tr:hover td {
@@ -461,10 +549,38 @@ select.input-glass {
 .badge {
   display: inline-flex;
   align-items: center;
-  padding: 0.25rem 0.75rem;
+  justify-content: center;
+  min-height: 1.75rem;
+  padding: 0.3rem 0.75rem;
   border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 600;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.admin-page-title {
+  color: var(--text-primary);
+  font-family: var(--font-heading);
+  font-size: clamp(1.55rem, 2.5vw, 2rem);
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.admin-page-subtitle {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-top: 0.35rem;
+}
+
+.admin-action-icon {
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-control);
 }
 
 .badge-verified {
@@ -497,11 +613,19 @@ select.input-glass {
    ======================================== */
 @media (max-width: 768px) {
   :root {
-    --section-padding: 4rem 1.25rem;
+    --section-padding: 4rem 1rem;
   }
 
   h1 { font-size: clamp(2rem, 6vw, 3rem); }
   h2 { font-size: clamp(1.5rem, 5vw, 2.5rem); }
+
+  .container-main {
+    padding: 0 1rem;
+  }
+
+  .admin-card {
+    padding: 1rem;
+  }
 
   .btn-primary, .btn-secondary, .btn-gold {
     padding: 0.75rem 1.5rem;
@@ -600,4 +724,3 @@ select.input-glass {
 .admin-panel-wrapper .hover\:bg-red-500\/10:hover {
   background: rgba(239, 68, 68, 0.08) !important;
 }
-
