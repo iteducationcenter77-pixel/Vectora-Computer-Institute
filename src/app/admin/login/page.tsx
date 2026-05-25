@@ -3,8 +3,10 @@
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
+import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { HiLockClosed, HiMail } from 'react-icons/hi'
+import { HiLockClosed, HiMail, HiArrowLeft } from 'react-icons/hi'
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('')
@@ -15,50 +17,155 @@ export default function AdminLogin() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
-    setLoading(true); setError('')
+    setLoading(true)
+    setError('')
     try {
       const supabase = createClient()
       const { error: err } = await supabase.auth.signInWithPassword({ email, password })
-      if (err) { setError(err.message) }
-      else { router.push('/admin/dashboard') }
-    } catch { setError('Login failed. Please try again.') }
-    finally { setLoading(false) }
+      if (err) {
+        setError(err.message === 'Invalid login credentials' ? 'Invalid email or password.' : err.message)
+      } else {
+        router.push('/admin/dashboard')
+      }
+    } catch {
+      setError('Login failed. Please try again.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4" style={{ background: 'var(--bg-primary)' }}>
-      <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center font-bold text-white text-2xl mx-auto mb-4"
-            style={{ fontFamily: 'var(--font-heading)' }}>V</div>
-          <h1 className="text-2xl font-bold text-[var(--text-primary)]" style={{ fontFamily: 'var(--font-heading)' }}>Admin Panel</h1>
-          <p className="text-sm text-[var(--text-secondary)] mt-1">Sign in to manage your institute</p>
+    <div
+      className="min-h-screen flex flex-col items-center justify-center px-4"
+      style={{
+        background: 'linear-gradient(135deg, #f0f4f1 0%, #e2eae5 100%)',
+      }}
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ type: 'spring', stiffness: 350, damping: 25 }}
+        className="w-full max-w-[396px]"
+      >
+        {/* Logo and Header area */}
+        <div className="text-center mb-6">
+          <div className="flex justify-center mb-3">
+            <Image
+              src="/vec-logo.png"
+              alt="Vectora Logo"
+              width={70}
+              height={70}
+              className="object-contain"
+              priority
+            />
+          </div>
+          <h1
+            className="text-2xl font-extrabold text-[var(--text-primary)] tracking-tight leading-tight"
+            style={{ fontFamily: 'var(--font-heading)' }}
+          >
+            Vectora Admin
+          </h1>
+          <p className="text-xs text-[var(--text-secondary)] mt-1.5 font-medium">
+            Sign in to access your administrative dashboard
+          </p>
         </div>
 
-        <form onSubmit={handleLogin} className="glass-card p-8 space-y-5">
+        {/* Facebook-style login card */}
+        <div
+          className="bg-white rounded-xl p-7 space-y-4"
+          style={{
+            boxShadow: '0 4px 16px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04)',
+            border: '1px solid rgba(22, 61, 42, 0.06)',
+          }}
+        >
           {error && (
-            <div className="p-3 rounded-lg text-sm text-red-500 bg-red-500/10 border border-red-500/20">
-              {error}
-            </div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="p-3 rounded-lg text-xs font-semibold text-red-600 bg-red-50 border border-red-100"
+            >
+              ⚠️ {error}
+            </motion.div>
           )}
-          <div>
-            <label className="block text-sm text-[var(--text-secondary)] mb-2 font-medium">Email</label>
-            <div className="relative">
-              <HiMail className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" />
-              <input type="email" required value={email} onChange={e => setEmail(e.target.value)} className="input-glass !pl-10 text-[var(--text-primary)] placeholder-[var(--text-muted)]" placeholder="admin@vectora.com" />
+
+          <form onSubmit={handleLogin} className="space-y-4">
+            {/* Email field */}
+            <div className="space-y-1">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-secondary)]">
+                Email Address
+              </label>
+              <div className="relative">
+                <HiMail
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"
+                  size={18}
+                />
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full min-h-[46px] pl-10 pr-3.5 rounded-lg border border-gray-200 text-sm focus:border-[var(--purple-600)] focus:ring-2 focus:ring-purple-500/10 outline-none transition"
+                  style={{ color: '#1a1a1a', background: '#fafafa' }}
+                  placeholder="admin@vectora.com"
+                />
+              </div>
             </div>
-          </div>
-          <div>
-            <label className="block text-sm text-[var(--text-secondary)] mb-2 font-medium">Password</label>
-            <div className="relative">
-              <HiLockClosed className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" />
-              <input type="password" required value={password} onChange={e => setPassword(e.target.value)} className="input-glass !pl-10 text-[var(--text-primary)] placeholder-[var(--text-muted)]" placeholder="••••••••" />
+
+            {/* Password field */}
+            <div className="space-y-1">
+              <label className="block text-xs font-bold uppercase tracking-wider text-[var(--text-secondary)]">
+                Password
+              </label>
+              <div className="relative">
+                <HiLockClosed
+                  className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"
+                  size={18}
+                />
+                <input
+                  type="password"
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full min-h-[46px] pl-10 pr-3.5 rounded-lg border border-gray-200 text-sm focus:border-[var(--purple-600)] focus:ring-2 focus:ring-purple-500/10 outline-none transition"
+                  style={{ color: '#1a1a1a', background: '#fafafa' }}
+                  placeholder="••••••••"
+                />
+              </div>
             </div>
+
+            {/* Login button */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full min-h-[46px] rounded-lg text-white font-bold text-sm flex items-center justify-center gap-2 transition cursor-pointer disabled:opacity-60"
+              style={{
+                background: 'var(--purple-600)',
+                border: 'none',
+                boxShadow: '0 2px 4px rgba(99, 102, 241, 0.15)',
+              }}
+            >
+              {loading ? 'Logging In...' : 'Log In'}
+            </button>
+          </form>
+
+          {/* Separator line */}
+          <div className="border-t border-gray-100 my-4" />
+
+          {/* Back link */}
+          <div className="text-center">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-1 text-xs font-semibold text-gray-500 hover:text-[var(--purple-600)] transition"
+            >
+              <HiArrowLeft size={12} /> Return to Vectora Home
+            </Link>
           </div>
-          <button type="submit" disabled={loading} className="btn-primary w-full !justify-center">
-            {loading ? 'Signing In...' : '🔐 Sign In'}
-          </button>
-        </form>
+        </div>
+
+        {/* Small copyright below card */}
+        <p className="text-center text-[10px] text-gray-400 mt-6 font-medium">
+          Vectora Computer Institute © 2026 · All Rights Reserved
+        </p>
       </motion.div>
     </div>
   )

@@ -46,19 +46,30 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   return (
     <div className="flex min-h-screen admin-panel-wrapper" style={{ background: 'var(--bg-primary)' }}>
 
-      {/* Mobile Toggle Button */}
-      <button
-        onClick={() => setSidebarOpen(!sidebarOpen)}
-        className="fixed top-3 left-3 z-50 md:hidden p-2 rounded-lg shadow-sm"
-        style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-primary)' }}
-        aria-label="Toggle sidebar"
+      {/* Mobile Top Header Bar */}
+      <div
+        className="fixed top-0 left-0 right-0 h-16 bg-[var(--bg-secondary)] border-b border-[var(--border-color)] flex items-center justify-between px-4 z-40 md:hidden"
+        style={{ backdropFilter: 'var(--glass-blur)' }}
       >
-        {sidebarOpen ? <HiX size={20} /> : <HiMenu size={20} />}
-      </button>
+        <div className="flex items-center gap-2">
+          <Image src="/vec-logo.png" alt="Vectora logo" width={28} height={28} className="w-7 h-7 object-contain" />
+          <span className="text-sm font-bold text-[var(--text-primary)]" style={{ fontFamily: 'var(--font-heading)' }}>
+            Vectora Admin
+          </span>
+        </div>
+        <button
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          className="p-1.5 rounded-lg"
+          style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-primary)' }}
+          aria-label="Toggle sidebar"
+        >
+          {sidebarOpen ? <HiX size={18} /> : <HiMenu size={18} />}
+        </button>
+      </div>
 
       {/* Sidebar */}
       <aside
-        className={`fixed md:sticky top-0 left-0 z-40 flex flex-col h-screen w-64 transition-transform duration-300 md:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        className={`fixed md:sticky top-0 left-0 z-50 flex flex-col h-screen w-64 transition-transform duration-300 md:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
         style={{ background: 'var(--bg-secondary)', borderRight: '1px solid var(--border-color)' }}
       >
         {/* Sidebar Header — pinned */}
@@ -103,8 +114,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Main Content */}
       <main className="flex-1 min-h-screen overflow-x-hidden">
         {/* Mobile top bar spacer */}
-        <div className="md:hidden h-14 shrink-0" />
-        <div className="p-4 md:p-8">
+        <div className="md:hidden h-16 shrink-0" />
+        <div className="p-6 md:p-8">
           {children}
         </div>
       </main>

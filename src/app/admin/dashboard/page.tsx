@@ -41,7 +41,7 @@ export default function AdminDashboard() {
     { icon: <HiShieldCheck />, title: 'Certificates', desc: 'Add, search, edit, and delete student certificates with auto-generated codes.' },
     { icon: <HiAcademicCap />, title: 'Courses', desc: 'Manage your course catalog with descriptions, fees, and images.' },
     { icon: <HiPhotograph />, title: 'Gallery', desc: 'Add images via Google Drive links organized by category.' },
-    { icon: <HiHome />, title: 'Hero Slides', desc: 'Manage the homepage hero section slides.' },
+    { icon: <HiHome />, title: 'Hero Images', desc: 'Manage the homepage hero section background images.' },
     { icon: <HiSpeakerphone />, title: 'Announcements', desc: 'Add scrolling announcements shown on the website.' },
     { icon: <HiUserGroup />, title: 'Admissions', desc: 'View and manage online admission form submissions.' },
   ]
