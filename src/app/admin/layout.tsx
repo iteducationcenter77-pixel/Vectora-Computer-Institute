@@ -41,56 +41,75 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     router.push('/admin/login')
   }
 
-  // Don't show sidebar on login page
   if (isLoginPage) return <>{children}</>
 
   return (
     <div className="flex min-h-screen admin-panel-wrapper" style={{ background: 'var(--bg-primary)' }}>
-      {/* Mobile Toggle */}
-      <button onClick={() => setSidebarOpen(!sidebarOpen)} className="fixed top-4 left-4 z-50 md:hidden p-2 rounded-lg text-[var(--text-primary)] shadow-sm"
-        style={{ background: 'var(--bg-tertiary)' }}>
+
+      {/* Mobile Toggle Button */}
+      <button
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+        className="fixed top-3 left-3 z-50 md:hidden p-2 rounded-lg shadow-sm"
+        style={{ background: 'var(--bg-card)', border: '1px solid var(--border-color)', color: 'var(--text-primary)' }}
+        aria-label="Toggle sidebar"
+      >
         {sidebarOpen ? <HiX size={20} /> : <HiMenu size={20} />}
       </button>
 
       {/* Sidebar */}
-      <aside className={`fixed md:sticky top-0 left-0 h-screen w-64 z-40 transition-transform duration-300 md:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
-        style={{ background: 'var(--bg-secondary)', borderRight: '1px solid var(--border-color)' }}>
-        <div className="p-5">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="w-11 h-11 rounded-lg bg-white border border-[var(--border-color)] flex items-center justify-center p-1.5 shadow-sm shrink-0">
-              <Image src="/vec-logo.png" alt="Vectora logo" width={36} height={36} className="h-full w-full object-contain" />
-            </div>
-            <div className="min-w-0">
-              <p className="text-sm font-bold text-[var(--text-primary)] leading-tight" style={{ fontFamily: 'var(--font-heading)' }}>Vectora Admin</p>
-              <p className="text-[0.65rem] text-[var(--text-muted)] truncate max-w-[140px]">{userEmail}</p>
-            </div>
+      <aside
+        className={`fixed md:sticky top-0 left-0 z-40 flex flex-col h-screen w-64 transition-transform duration-300 md:translate-x-0 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}
+        style={{ background: 'var(--bg-secondary)', borderRight: '1px solid var(--border-color)' }}
+      >
+        {/* Sidebar Header — pinned */}
+        <div className="shrink-0 flex items-center gap-3 px-5 py-5" style={{ borderBottom: '1px solid var(--border-color)' }}>
+          <div className="w-10 h-10 rounded-lg bg-white border border-[var(--border-color)] flex items-center justify-center p-1.5 shadow-sm shrink-0">
+            <Image src="/vec-logo.png" alt="Vectora logo" width={36} height={36} className="h-full w-full object-contain" />
           </div>
-
-          <nav className="space-y-1">
-            {navItems.map(item => (
-              <Link key={item.href} href={item.href} onClick={() => setSidebarOpen(false)}
-                className={`admin-nav-item ${pathname === item.href ? 'active' : ''}`}>
-                {item.icon} {item.name}
-              </Link>
-            ))}
-          </nav>
+          <div className="min-w-0">
+            <p className="text-sm font-bold text-[var(--text-primary)] leading-tight" style={{ fontFamily: 'var(--font-heading)' }}>Vectora Admin</p>
+            <p className="text-[0.65rem] text-[var(--text-muted)] truncate max-w-[140px]">{userEmail}</p>
+          </div>
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 p-5" style={{ borderTop: '1px solid var(--border-color)' }}>
-          <button onClick={handleLogout} className="admin-nav-item w-full text-red-400 hover:!text-red-300 hover:!bg-red-500/10">
+        {/* Nav — scrollable middle */}
+        <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-0.5">
+          {navItems.map(item => (
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={() => setSidebarOpen(false)}
+              className={`admin-nav-item ${pathname === item.href ? 'active' : ''}`}
+            >
+              {item.icon} {item.name}
+            </Link>
+          ))}
+        </nav>
+
+        {/* Sidebar Footer — pinned */}
+        <div className="shrink-0 px-3 py-4 space-y-0.5" style={{ borderTop: '1px solid var(--border-color)' }}>
+          <button onClick={handleLogout} className="admin-nav-item w-full" style={{ color: '#dc2626' }}>
             <HiLogout /> Logout
           </button>
-          <Link href="/" className="admin-nav-item w-full mt-1 text-gray-500">
+          <Link href="/" className="admin-nav-item w-full" style={{ color: 'var(--text-muted)' }}>
             <HiHome /> View Website
           </Link>
         </div>
       </aside>
 
-      {/* Overlay */}
-      {sidebarOpen && <div className="fixed inset-0 bg-black/50 z-30 md:hidden" onClick={() => setSidebarOpen(false)} />}
+      {/* Mobile Overlay */}
+      {sidebarOpen && (
+        <div className="fixed inset-0 bg-black/40 z-30 md:hidden" onClick={() => setSidebarOpen(false)} />
+      )}
 
       {/* Main Content */}
-      <main className="flex-1 min-h-screen p-4 md:p-8 pt-16 md:pt-8 overflow-x-hidden">{children}</main>
+      <main className="flex-1 min-h-screen overflow-x-hidden">
+        {/* Mobile top bar spacer */}
+        <div className="md:hidden h-14 shrink-0" />
+        <div className="p-4 md:p-8">
+          {children}
+        </div>
+      </main>
     </div>
   )
 }
